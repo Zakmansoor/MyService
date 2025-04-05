@@ -1,0 +1,95 @@
+﻿@model Domin.Entity.Paid
+@{
+    ViewData["Title"] = "Payment Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6B9W0TtK3S8G8AA9A3O5I3yPf5J4mB8y+gEHB5aYl3Ck" crossorigin="anonymous">
+    <!-- DataTables CSS (if needed) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Flash Messages -->
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <!-- Header and Breadcrumb -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Payment Page</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/Admin/Home/Index">@ResourceWeb.lbHomePage</a></li>
+                            <li class="breadcrumb-item active">Payment Page</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h2 class="card-title mb-0">Payment Details</h2>
+                            </div>
+                            <div class="card-body">
+                                <form asp-action="ProcessPayment" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <div class="mb-3">
+                                        <label class="form-label">User ID</label>
+                                        <input type="text" class="form-control" value="@Model.Request.UserId" readonly />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Service Name</label>
+                                        <input type="text" class="form-control" value="@Model.NameServece" readonly />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Date</label>
+                                        <input type="text" class="form-control" value="@Model.DateTime.ToString("yyyy/MM/dd HH:mm")" readonly />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Amount</label>
+                                        <!-- Leave the amount field blank for manual input -->
+                                        <input  name="amount" class="form-control" placeholder="Enter the required amount" />
+                                        <span asp-validation-for="amount" class="text-danger"></span>
+                                    </div>
+                                    <!-- Hidden field to pass the RequestId -->
+                                    <input type="hidden" name="Request.RequestId" value="@Model.Request.RequestId" />
+                                    <button type="submit" class="btn btn-primary">Submit Payment</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-qDflndd4msC6zzc0l+Oup3Hq4nO1E2C+ePC61Jhlv+I2bT09r+M5hK7d8de8+ljr" crossorigin="anonymous"></script>
+</body>
+</html>

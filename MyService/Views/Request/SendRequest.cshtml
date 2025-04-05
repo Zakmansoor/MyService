@@ -1,0 +1,92 @@
+﻿@inject UserManager<ApplicationUser> userManager
+@inject SignInManager<ApplicationUser> signInManager
+@model RequestViewModel
+
+@{
+    ViewData["Title"] = "SendRequest";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<partial name="_Natification" />
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6B9W0TtK3S8G8AA9A3O5I3yPf5J4mB8y+gEHB5aYl3Ck" crossorigin="anonymous">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        .my-element {
+           
+            top: 300px; /* يثبت العنصر 50 بكسل من الأعلى */
+        }
+
+    </style>
+</head>
+
+<body >
+<div class="wrapper ">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+            <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white my-element">
+                    <h2 class="card-title mt-5">Send Request</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="SendRequest" method="post">
+                        @Html.AntiForgeryToken()
+
+                       
+
+                        
+
+                        <div class="form-group">
+                            <label asp-for="ServiceId" class="control-label"></label>
+                            <select asp-for="ServiceId" class="form-control"
+                                    asp-items="@(new SelectList(Model.Services, "ServiceID", "Name"))">
+                                <option value="">-- Select Service --</option>
+                            </select>
+                            <span asp-validation-for="ServiceId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="OrderDate" class="control-label"></label>
+                            <input asp-for="OrderDate" type="date" class="form-control" />
+                            <span asp-validation-for="OrderDate" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="Comment" class="control-label"></label>
+                            <textarea asp-for="Comment" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-success">Send Request</button>
+                            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary ml-2">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-/xUj+3OJ2JcmoE31Gd7hZ9zG4GkHa+K0eTV4Ol6TC1ENP6wWX4GyHvo2Yr3z2N1w" crossorigin="anonymous"></script>
+    <!-- Bootstrap Bundle JS (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qDflndd4msC6zzc0l+Oup3Hq4nO1E2C+ePC61Jhlv+I2bT09r+M5hK7d8de8+ljr" crossorigin="anonymous"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
+
+    <!-- SweetAlert2 CSS -->
+
+    <!-- SweetAlert2 JS -->
+    

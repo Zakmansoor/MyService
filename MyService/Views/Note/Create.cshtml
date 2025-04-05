@@ -1,0 +1,44 @@
+﻿@model Domin.Entity.note
+@inject UserManager<ApplicationUser> userManager
+
+@{
+    ViewData["Title"] = "Add New Note";
+    var currentUser = await userManager.GetUserAsync(User);
+
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title mb-0">Add New Note</h2>
+        </div>
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success">@TempData["Success"]</div>
+            }
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div class="mb-3" hidden>
+                    <label asp-for="name" class="form-label">Note Name</label>
+                    <input asp-for="name" value="currentUser" class="form-control"  />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="description" class="form-label">Description</label>
+                    <textarea asp-for="description" class="form-control" rows="4" placeholder="Enter note description"></textarea>
+                    <span asp-validation-for="description" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-success">Add Note</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

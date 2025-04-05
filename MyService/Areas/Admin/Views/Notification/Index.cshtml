@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Domin.Entity.Notification>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Notifications Pop-up</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Notifications</h1>
+        <!-- Button to trigger the notifications modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notificationsModal">
+            Show Notifications
+        </button>
+    </div>
+
+    <!-- Modal for displaying notifications -->
+    <div class="modal fade" id="notificationsModal" tabindex="-1" role="dialog" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationsModalLabel">Your Notifications</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @if (Model != null && Model.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var notification in Model)
+                            {
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            @* <strong>@(notification? ?? "Unknown")</strong>: @notification.Message *@
+                                        </div>
+                                        <small class="text-muted">@notification.CreatedAt.ToString("g")</small>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No notifications available.</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <!-- Button to delete all notifications -->
+                    <form method="post" action="@Url.Action("DeleteAll", "Notification", new { area = "Admin" })">
+                        <button type="submit" class="btn btn-danger">Delete All</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
