@@ -27,6 +27,12 @@ namespace MyService.Controllers
         // GET: Request/Create
         public async Task<IActionResult> SendRequest()
         {
+            var identityUser = await _userManager.GetUserAsync(User);
+            if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
+            {
+              return RedirectToAction("Index", "Home");
+            }
+           
             var viewModel = new RequestViewModel
             {
                 OrderDate = DateTime.Today

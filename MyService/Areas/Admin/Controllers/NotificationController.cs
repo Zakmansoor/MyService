@@ -1,6 +1,7 @@
 ﻿using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace MyService.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class NotificationController : Controller
     {
         private readonly MyServiceDbContext _context;
@@ -22,9 +24,9 @@ namespace MyService.Areas.Admin.Controllers
             _signInManager = sign;
             _userManager = userManager;
         }
-       
 
-        // GET: Admin/Notification
+
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> Index()
         {
             if (!_signInManager.IsSignedIn(User))

@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MyService.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize]
     public class PaymenthistoryController : Controller
     {
         private readonly MyServiceDbContext _context;
@@ -24,7 +27,8 @@ namespace MyService.Areas.Admin.Controllers
         }
 
         // GET: Payment/Index
-        
+        [Authorize(Roles = "SuperAdmin")]
+
         public async Task<IActionResult> Index()
         {
 

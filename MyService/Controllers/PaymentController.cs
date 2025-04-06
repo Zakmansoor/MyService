@@ -62,7 +62,10 @@ namespace MyService.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var identityUser = await _userManager.GetUserAsync(User);
-
+            if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var payments = await _context.paids
                 .Include(p => p.Request)
                 .ThenInclude(r => r.Service)

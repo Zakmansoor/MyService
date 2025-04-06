@@ -6,8 +6,19 @@
 @using Microsoft.EntityFrameworkCore
 @{
     // جلب المستخدم الحالي
-    var currentUser = await userManager.GetUserAsync(User);
-
+    ApplicationUser currentUser = null;
+    bool showUserInfo = false; // تعيين القيمة الافتراضية
+    if (signInManager.IsSignedIn(User))
+    {
+        currentUser = await userManager.GetUserAsync(User);
+        // إذا كان المستخدم موجودًا، نقوم بالتحقق من دوره
+        if (currentUser != null)
+        {
+            // إذا لم يكن المستخدم من Admin أو SuperAdmin، نعرض بيانات المستخدم
+            showUserInfo = !(await userManager.IsInRoleAsync(currentUser, "Admin") 
+                             || await userManager.IsInRoleAsync(currentUser, "SuperAdmin"));
+        }
+    }
     // تهيئة القوائم كقوائم فارغة افتراضيًا
     List<Notification> notifactionlist = new List<Notification>();
     List<Paid> pay = new List<Paid>();
@@ -139,42 +150,41 @@
                     </div>
 
                     <div class="col-lg-4 text-center text-lg-end">
-                        @if (signInManager.IsSignedIn(User))
+                        @if (signInManager.IsSignedIn(User) && currentUser != null)
                         {
-                            <div class="d-flex align-items-center justify-content-end">
-                                <div class="me-3">
-                                    <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)"
-                                         class="rounded-circle"
-                                         alt="User Image"
-                                         style="width: 40px; height: 40px; object-fit: cover;">
+                            @if (showUserInfo)
+                            {
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <div class="me-3">
+                                        <img src="@Helper.PathImageuser@currentUser.ImageUser"
+                                             class="rounded-circle"
+                                             alt="User Image"
+                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                    </div>
+                                    <div class="dropdown">
+                                        <a href="#" class="text-dark fw-bold text-decoration-none dropdown-toggle"
+                                           id="userDropdown" data-bs-toggle="dropdown">
+                                            @currentUser.Name
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <form asp-action="Logout" asp-controller="Customer" method="post">
+                                                    <button type="submit" class="dropdown-item text-danger">
+                                                        Logout
+                                                    </button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <a href="@Url.Action("UpdateProfile", "Customer", new { id = currentUser.Id })"
+                                                   class="dropdown-item text-danger">
+                                                    Edit Profile
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="dropdown">
-                                    <a href="#"
-                                       class="text-dark fw-bold text-decoration-none dropdown-toggle"
-                                       id="userDropdown"
-                                       data-bs-toggle="dropdown"
-                                       aria-expanded="false">
-                                        @((await userManager.GetUserAsync(User)).Name)
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                        <li>
-                                            <form asp-action="Logout" asp-controller="Customer" method="post" class="d-inline">
-                                                <button type="submit" class="dropdown-item text-danger">
-                                                    Logout
-                                                </button>
-                                            </form>
-                                        </li>
-                                        <li>
-                                            <a href="@Url.Action("UpdateProfile", "Customer", new { id = userManager.GetUserId(User) })" class="dropdown-item text-danger">
-                                                Edit Profile
-                                            </a>
-                                        </li>
-                                        <!-- مثال باستخدام Font Awesome -->
-
-
-                                    </ul>
-                                </div>
-                            </div>
+                            }
+                            
                         }
                         else
                         {
@@ -190,8 +200,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Topbar End -->
-        </div>
         <!-- Topbar End -->
         <!-- Navbar & Hero Start -->
         <div class="container-fluid position-relative p-0">
@@ -202,7 +210,11 @@
                 <a asp-action="pymentlist" asp-controller="Payment" class="nav-item nav-link position-relative me-3">
                     <i class="fas fa-shopping-cart fa-lg"></i>
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                        @pay.Count()
+                            @if (showUserInfo)
+                            {
+                                @pay.Count()
+
+                            }
                         <span class="visually-hidden">unread messages</span>
                     </span>
                 </a>
@@ -222,7 +234,15 @@
                             <div class="dropdown-menu m-0">
                                 <a href="#Features" class="dropdown-item">Our Features</a>
                                 <a asp-controller="Note"asp-action="Create" class="dropdown-item">Send Note</a>
-                                <a asp-action="Index" asp-controller="Notifaction" class="dropdown-item">Message <span class="badge bg-warning navbar-badge">@notifactionlist.Count()</span></a>
+                                    <a asp-action="Index" asp-controller="Notifaction" class="dropdown-item">
+                                        Message <span class="badge bg-warning navbar-badge">
+                                            @if (showUserInfo)
+                                            {
+                                                @notifactionlist.Count()
+
+                                            }
+                                        </span>
+                                    </a>
                             </div>
                         </div>
                         <a href="contact.html" class="nav-item nav-link">Contact Us</a>

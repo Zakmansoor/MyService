@@ -29,9 +29,15 @@ namespace MyService.Controllers
         }
 
         // GET: Note/Create
-        public IActionResult Create()
+        public async Task< IActionResult> Create()
         {
+            var identityUser = await _userManager.GetUserAsync(User);
+
             if (!_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
             {
                 return RedirectToAction("Index", "Home");
             }

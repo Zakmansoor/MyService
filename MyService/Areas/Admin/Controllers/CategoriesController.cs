@@ -1,6 +1,7 @@
 ﻿using Domin.Entity;
 using Infarstuructre.IRepository;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using System;
 namespace MyService.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly IServicesRepository<Category> _servicesCategory;
@@ -23,6 +25,8 @@ namespace MyService.Areas.Admin.Controllers
             _servicesCategoryLog = servicesCategoryLog;
             _userManager = userManager;
         }
+        [Authorize(Roles = "SuperAdmin")]
+
         public IActionResult Categories()
         {
             return View(new CategoryViewModel
@@ -50,6 +54,8 @@ namespace MyService.Areas.Admin.Controllers
        
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
+
         public IActionResult Save(CategoryViewModel model)
         {
             if (ModelState.IsValid)

@@ -1,6 +1,7 @@
 ﻿using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace MyService.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class RequstsController : Controller
     {
         private readonly MyServiceDbContext _context;
@@ -18,6 +20,7 @@ namespace MyService.Areas.Admin.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles = "SuperAdmin")]
 
         public async Task<IActionResult> Index()
         {
@@ -54,6 +57,8 @@ namespace MyService.Areas.Admin.Controllers
         // POST: Request/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
+
         public async Task<IActionResult> Edit(int id, RequestViewModel viewModel)
         {
             if (id != viewModel.RequestId)

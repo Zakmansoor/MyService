@@ -36,7 +36,7 @@ namespace MyService.Areas.Admin.Controllers
         #endregion
 
         #region Method
-        [Authorize(Roles = "SuperAdmin,User")]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Roles()
         {
             return View(new RolesViewModel
@@ -96,7 +96,7 @@ namespace MyService.Areas.Admin.Controllers
             return RedirectToAction("Roles");
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "SuperAdmin")]
         public IActionResult Registers()
         {
             var model = new RegisterViewModel
@@ -112,6 +112,7 @@ namespace MyService.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
 
+        [Authorize(Roles = "SuperAdmin")]
 
         public async Task<IActionResult> Registers(RegisterViewModel model)
         {

@@ -1,6 +1,7 @@
 ﻿using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace MyService.Areas.Admin.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles = "SuperAdmin")]
 
         public IActionResult Index()
         {

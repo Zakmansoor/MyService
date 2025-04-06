@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyService.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ServiceController : Controller
     {
         private readonly MyServiceDbContext _context;
@@ -19,6 +21,7 @@ namespace MyService.Areas.Admin.Controllers
         {
             _context = context;
         }
+        [Authorize(Roles = "SuperAdmin")]
 
         [HttpGet]
         public async Task<IActionResult> Service()
@@ -33,6 +36,8 @@ namespace MyService.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "SuperAdmin")]
+
         public async Task<IActionResult> Service(ServiceViewModel service)
         {
             

@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +22,17 @@ namespace MyService.Controllers
             _signInManager = sign;
             _userManager = userManager;
         }
-        
+
 
         // GET: Notifaction/ByRequest/5
+        [Authorize("Basic")]
+        
         public async Task<IActionResult> ByRequest(int? requestId)
         {
+            if (!_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var identityUser = await _userManager.GetUserAsync(User);
             if (requestId == null)
             {
@@ -94,11 +102,17 @@ namespace MyService.Controllers
        
         public async Task<IActionResult> Index()
         {
+            var identityUser = await _userManager.GetUserAsync(User);
+
             if (!_signInManager.IsSignedIn(User))
             {
                 return RedirectToAction("Index", "Home");
             }
-            var identityUser = await _userManager.GetUserAsync(User);
+            if(await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
 
             var notifications = await _context.notifications
                 .Where(n => n.UserId == identityUser.ToString())
@@ -107,7 +121,7 @@ namespace MyService.Controllers
 
             if (notifications == null || !notifications.Any())
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
 
             return View(notifications);
