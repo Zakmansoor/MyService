@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Domin.Entity.Paid>
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.Extensions.Options
+@inject IOptions<RequestLocalizationOptions> option
+@model IEnumerable<Domin.Entity.Paid>
 @{
     ViewData["Title"] = "Payments";
 }
@@ -91,7 +94,7 @@
                             <tfoot class="bg-light">
                                 <tr>
                                     <td colspan="3" class="text-end fw-bold">Total:</td>
-                                    <td colspan="4" class="text-success fw-bold">@Model.Sum(p => p.amount).ToString("C")</td>
+                                    <td colspan="4" class="text-success fw-bold">@Model.Sum(p => p.amount).ToString("c")</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -114,21 +117,7 @@
     <script>
         $(document).ready(function () {
             // Initialize DataTables for responsive table design
-            $('#paymentsTable').DataTable({
-                "autoWidth": false,
-                "responsive": true,
-                "columnDefs": [
-                    { "orderable": false, "targets": [6] }, // Disable sorting for the Actions column
-                    { "className": "dt-center", "targets": "_all" }
-                ],
-                "language": {
-                    "emptyTable": "No payment records found",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ payments",
-                    "infoEmpty": "Showing 0 to 0 of 0 payments",
-                    "lengthMenu": "Display _MENU_ payments",
-                    "search": "Search payments:"
-                }
-            });
+            
 
             // Handle Send Payment button click
             $(document).on('click', '.send-payment-btn', function (e) {

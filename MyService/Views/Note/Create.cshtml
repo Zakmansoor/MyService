@@ -1,10 +1,24 @@
-﻿@model Domin.Entity.note
-@inject UserManager<ApplicationUser> userManager
+﻿@using System.Globalization;
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@model Domin.Entity.note
+@inject IViewLocalizer localizer 
+@inject UserManager<ApplicationUser> userManager
+@* 
+@inject IOptions<RequestLocalizationOptions> locOption
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+
+ *@
 @{
     ViewData["Title"] = "Add New Note";
     var currentUser = await userManager.GetUserAsync(User);
+    @if(CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+    {
+        Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
 
+    }
 }
 
 <div class="container mt-5">
@@ -29,11 +43,11 @@
                     <span asp-validation-for="name" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="description" class="form-label">Description</label>
-                    <textarea asp-for="description" class="form-control" rows="4" placeholder="Enter note description"></textarea>
+                    <label asp-for="description" class="form-label">@localizer["Description"]</label>
+                    <textarea asp-for="description" class="form-control" rows="4" placeholder="@localizer["Marquee"]"></textarea>
                     <span asp-validation-for="description" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-success">Add Note</button>
+                <button type="submit" class="btn btn-success">@localizer["Send"] </button>
             </form>
         </div>
     </div>

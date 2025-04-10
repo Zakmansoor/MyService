@@ -28,18 +28,21 @@ namespace MyService.Controllers
         public async Task<IActionResult> SendRequest()
         {
             var identityUser = await _userManager.GetUserAsync(User);
-            if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
-            {
-              return RedirectToAction("Index", "Home");
-            }
-           
+            
+            
+
             var viewModel = new RequestViewModel
-            {
-                OrderDate = DateTime.Today
-            };
+                {
+                    OrderDate = DateTime.Today
+                };
 
             if (_signInManager.IsSignedIn(User))
             {
+                if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
                 await PopulateDropdownsAsync(viewModel);
                 return View(viewModel);
             }

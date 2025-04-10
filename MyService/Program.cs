@@ -8,13 +8,18 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -73,6 +78,30 @@ namespace MyService
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddLocalization(options => options.ResourcesPath = "Resource");
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
+
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new List<CultureInfo>
+        {
+            new CultureInfo("en-US"),
+            new CultureInfo("ar-SA")
+        };
+
+                // تحديد اللغة الافتراضية
+                options.DefaultRequestCulture = new RequestCulture("en-US");
+                // تحديد اللغات المدعومة على مستوى واجهة المستخدم والبيانات
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                // يمكنك أيضًا استخدام CookieRequestCultureProvider للسماح بحفظ اختيار اللغة لدى المستخدم
+                options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSession();
@@ -97,7 +126,7 @@ namespace MyService
             services.AddScoped<IServicesRepositoryLog<LogCategory>, ServicesLogCategory>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOptions<RequestLocalizationOptions> localizationOptions)
         {
             if (env.IsDevelopment())
             {
@@ -108,8 +137,13 @@ namespace MyService
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // تفعيل Middleware الخاص بالتوطين باستخدام الإعدادات السابقة
+            app.UseRequestLocalization(localizationOptions.Value);
+
             app.UseRouting();
             app.UseSession();
             app.UseAuthentication();
@@ -120,7 +154,7 @@ namespace MyService
                 endpoints.MapControllerRoute(
                     name: "areas",
                     pattern: "{area:exists}/{controller=Accounts}/{action=Login}/{id?}");
-          
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

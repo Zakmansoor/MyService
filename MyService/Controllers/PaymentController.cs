@@ -37,7 +37,7 @@ namespace MyService.Controllers
 
             if (payment == null)
             {
-                TempData["Error"] = "Payment record not found.";
+                TempData["Error"] = ".";
                 return RedirectToAction("Index", "Home");
             }
 
@@ -74,7 +74,7 @@ namespace MyService.Controllers
 
             if (payments == null || !payments.Any())
             {
-                TempData["Error"] = "No payment record found.";
+                TempData["Error"] = "_.";
                 return RedirectToAction("Index", "Home");
             }
 

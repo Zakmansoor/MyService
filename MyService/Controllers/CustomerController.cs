@@ -217,6 +217,87 @@ namespace MyService.Controllers
             TempData["SuccessMessage"] = "تم تحديث الملف الشخصي بنجاح";
             return RedirectToAction("Index", "Home");
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateProfilear(UpdateProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.FindByIdAsync(model.Id);
+            if (user == null || user.Id != _userManager.GetUserId(User))
+            {
+                return NotFound();
+            }
+
+            // التحقق من البريد الإلكتروني الجديد في حال تغييره
+            if (user.Email != model.Email)
+            {
+                var emailExists = await _userManager.FindByEmailAsync(model.Email);
+                if (emailExists != null)
+                {
+                    ModelState.AddModelError("Email", "البريد الإلكتروني مستخدم بالفعل");
+                    return View(model);
+                }
+            }
+
+            // تحديث الصورة في حال تم رفع ملف
+            if (HttpContext.Request.Form.Files.Count > 0)
+            {
+                var file = HttpContext.Request.Form.Files[0];
+                string imageName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                string filePath = Path.Combine("wwwroot", Helper.PathSaveImageuser, imageName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                // تحديث الخاصية الخاصة بصورة المستخدم
+                user.ImageUser = imageName;
+                model.CurrentImage = imageName;
+            }
+            // وإلا يتم الاحتفاظ بالصورة الحالية دون تغيير
+
+            // تحديث البيانات الأساسية
+            user.Name = model.Name;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                AddErrorsToModelState(updateResult.Errors);
+                return View(model);
+            }
+
+            // تحديث كلمة المرور إن كان المستخدم يريد تغييرها
+            if (!string.IsNullOrEmpty(model.PasswordUpdate?.NewPassword))
+            {
+                if (model.PasswordUpdate.NewPassword != model.PasswordUpdate.ComparePassword)
+                {
+                    ModelState.AddModelError("PasswordUpdate.ComparePassword", "كلمات المرور غير متطابقة");
+                    return View(model);
+                }
+
+                // يجب استخدام الحقل المخصص لكلمة المرور الحالية لتغيير كلمة المرور
+                var changeResult = await _userManager.ChangePasswordAsync(
+                    user,
+                    model.PasswordUpdate.CurrentPassword, // استخدام كلمة المرور الحالية
+                    model.PasswordUpdate.NewPassword
+                );
+
+                if (!changeResult.Succeeded)
+                {
+                    AddErrorsToModelState(changeResult.Errors);
+                    return View(model);
+                }
+            }
+
+            TempData["SuccessMessage"] = "تم تحديث الملف الشخصي بنجاح";
+            return RedirectToAction("Index", "Home");
+        }
 
         // دالة مساعدة لإضافة الأخطاء
         private void AddErrorsToModelState(IEnumerable<IdentityError> errors)

@@ -37,7 +37,7 @@ namespace MyService.Areas.Admin.Controllers
             var payments = await _context.historypaids
                 .Include(p => p.Request)
                 .ThenInclude(r => r.Service)
-                .Where(p => p.Request.UserId == identityUser.UserName)
+                
                 .ToListAsync();
 
             if (payments == null || !payments.Any())

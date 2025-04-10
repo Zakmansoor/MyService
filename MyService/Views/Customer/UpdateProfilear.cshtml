@@ -1,0 +1,224 @@
+﻿@model UpdateProfileViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تعديل الملف الشخصي</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background: #f7f7f7;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .profile-card {
+            max-width: 600px;
+            margin: 60px auto;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-card .card-header {
+                background-color: #007bff;
+                color: #fff;
+                text-align: center;
+                font-size: 1.75rem;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+
+        .btn-custom {
+            background-color: #007bff;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-custom:hover {
+                background-color: #0056b3;
+            }
+
+        .img-preview {
+            max-width: 200px;
+            border-radius: 50%;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .password-section {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        /* RTL Adjustments */
+        .form-label {
+            text-align: right;
+            display: block;
+            width: 100%;
+        }
+
+        .input-group > .form-control {
+            border-radius: 0 0.375rem 0.375rem 0 !important;
+        }
+
+        .input-group > button {
+            border-radius: 0.375rem 0 0 0.375rem !important;
+        }
+    </style>
+    <!-- Arabic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="card profile-card">
+            <div class="card-header">
+                تعديل الملف الشخصي
+            </div>
+            <div class="card-body">
+                <!-- Main Profile Update Form -->
+                <form asp-action="UpdateProfile" asp-controller="Customer" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">الاسم الكامل</label>
+                        <input asp-for="Name" class="form-control" placeholder="أدخل الاسم الكامل" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">البريد الإلكتروني</label>
+                        <input asp-for="Email" class="form-control" placeholder="أدخل البريد الإلكتروني" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- Optional Password Change Section -->
+                    <div class="password-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5>تغيير كلمة المرور</h5>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                    onclick="togglePasswordFields()">
+                                <i class="fas fa-edit"></i> تغيير
+                            </button>
+                        </div>
+                        <div id="passwordFields" style="display: none;">
+                            <div class="mb-3">
+                                <label asp-for="PasswordUpdate.CurrentPassword" class="form-label">كلمة المرور الحالية</label>
+                                <div class="input-group">
+                                    <input asp-for="PasswordUpdate.CurrentPassword" type="password"
+                                           class="form-control" placeholder="أدخل كلمة المرور الحالية" />
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            onclick="togglePasswordVisibility(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="PasswordUpdate.CurrentPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PasswordUpdate.NewPassword" class="form-label">كلمة المرور الجديدة</label>
+                                <div class="input-group">
+                                    <input asp-for="PasswordUpdate.NewPassword" type="password"
+                                           class="form-control" placeholder="أدخل كلمة المرور الجديدة" />
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            onclick="togglePasswordVisibility(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="PasswordUpdate.NewPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="PasswordUpdate.ComparePassword" class="form-label">تأكيد كلمة المرور</label>
+                                <div class="input-group">
+                                    <input asp-for="PasswordUpdate.ComparePassword" type="password"
+                                           class="form-control" placeholder="أعد إدخال كلمة المرور" />
+                                    <button type="button" class="btn btn-outline-secondary"
+                                            onclick="togglePasswordVisibility(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="PasswordUpdate.ComparePassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Profile Image Upload Field -->
+                        <div class="mb-3">
+                            <label class="form-label">صورة الملف الشخصي</label>
+                            <input type="file" name="ProfileImage" class="form-control"
+                                   id="userImage" accept="image/*" onchange="previewImage(event)" />
+                        </div>
+
+                        <!-- Image Preview -->
+                        <div class="mb-3 text-center">
+                            <img id="profileImagePreview"
+                                 src="@Url.Content(string.IsNullOrEmpty(Model.CurrentImage) ? "~/img/testimonial-3.jpg" : "~/" + Helper.PathSaveImageuser + "/" + Model.CurrentImage)"
+                                 alt="معاينة الصورة"
+                                 class="img-preview" />
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary">إلغاء</a>
+                            <button type="submit" class="btn btn-custom">تحديث الملف</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        // Toggle password fields visibility
+        function togglePasswordFields() {
+            const fields = document.getElementById('passwordFields');
+            fields.style.display = fields.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Toggle password input type
+        function togglePasswordVisibility(btn) {
+            const input = btn.parentElement.querySelector('input');
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Image preview handler
+        function previewImage(event) {
+            const reader = new FileReader();
+            const preview = document.getElementById('profileImagePreview');
+            reader.onload = () => preview.src = reader.result;
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Toastr notifications
+        $(document).ready(function () {
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@Html.Raw(TempData["ErrorMessage"])');</text>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@Html.Raw(TempData["SuccessMessage"])');</text>
+        }
+        });
+    </script>
+</body>
+</html>
