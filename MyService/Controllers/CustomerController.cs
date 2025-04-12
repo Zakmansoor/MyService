@@ -35,7 +35,7 @@ namespace MyService.Controllers
       
 
         [HttpGet]
-        public  async Task<IActionResult> Registers()
+        public   IActionResult Registers()
         {
             var model = new RegisterCustomerViewModel
             {

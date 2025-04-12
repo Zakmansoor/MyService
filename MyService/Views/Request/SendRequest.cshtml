@@ -11,91 +11,180 @@
     @if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
     {
         Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
-
     }
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-<partial name="_Natification" />
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-ENjdO4Dr2bkBIFxQpeoA6B9W0TtK3S8G8AA9A3O5I3yPf5J4mB8y+gEHB5aYl3Ck" crossorigin="anonymous">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyService</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
-        .my-element {
-           
-            top: 300px; /* يثبت العنصر 50 بكسل من الأعلى */
+        #map {
+            height: 400px;
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+            position: relative;
         }
 
+        .card-header {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .locate-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+            .locate-btn:hover {
+                background: #f8f9fa;
+            }
     </style>
 </head>
 
-<body >
-<div class="wrapper ">
-
+<body>
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-            <div class="card shadow-sm">
-                    <div class="card-header bg-primary text-white my-element">
-                    <h2 class="card-title mt-5">Send Request</h2>
-                </div>
-                <div class="card-body">
-                    <form asp-action="SendRequest" method="post">
-                        @Html.AntiForgeryToken()
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="card-title mb-0">Send Service Request</h2>
+                    </div>
+                    <div class="card-body">
+                        <form asp-action="SendRequest" method="post">
+                            @Html.AntiForgeryToken()
 
-                       
+                            <!-- Map Section -->
+                            <div class="form-group">
+                                <label class="form-label fw-bold">Select Location on Map</label>
+                                <button type="button" class="locate-btn" title="Use my current location">
+                                    <i class="bi bi-geo-alt"></i> Current Location
+                                </button>
+                                <div id="map"></div>
+                                <small class="form-text text-muted">Click on the map or use the button above to select location</small>
+                                <input type="hidden" asp-for="Latitude" id="latitude" />
+                                <input type="hidden" asp-for="Longitude" id="longitude" />
+                            </div>
 
-                        
-
-                        <div class="form-group">
-                            <label asp-for="ServiceId" class="control-label"></label>
-                            <select asp-for="ServiceId" class="form-control"
-                                    asp-items="@(new SelectList(Model.Services, "ServiceID", "Name"))">
+                            <div class="form-group">
+                                <label class="control-label">@localizer["Marquee"]</label>
+                                <select asp-for="ServiceId" class="form-control"
+                                        asp-items="@(new SelectList(Model.Services, "ServiceID", "Name"))">
                                     <option value="">@localizer["Marquee"]</option>
-                            </select>
-                            <span asp-validation-for="ServiceId" class="text-danger"></span>
-                        </div>
+                                </select>
+                                <span asp-validation-for="ServiceId" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group">
-                            <label class="control-label">@localizer["Date"]</label>
-                            <input asp-for="OrderDate" type="date" class="form-control" />
-                            <span asp-validation-for="OrderDate" class="text-danger"></span>
-                        </div>
+                            <div class="form-group">
+                                <label class="control-label">@localizer["Date"]</label>
+                                <input asp-for="OrderDate" type="date" class="form-control" />
+                                <span asp-validation-for="OrderDate" class="text-danger"></span>
+                            </div>
 
 
-                        <div class="form-group">
+                            <div class="form-group">
                                 <label class="control-label">@localizer["Comment"]</label>
                                 <textarea asp-for="Comment" class="form-control" rows="4"></textarea>
-                            <span asp-validation-for="Comment" class="text-danger"></span>
-                        </div>
+                                <span asp-validation-for="Comment" class="text-danger"></span>
+                            </div>
 
-                        <div class="form-group mt-4">
+                            <div class="form-group mt-4">
                                 <button type="submit" class="btn btn-success">@localizer["Send"]</button>
                                 <a asp-action="Index" asp-controller="Home" class="btn btn-secondary ml-2">@localizer["Cancel"]</a>
-                        </div>
-                    </form>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-/xUj+3OJ2JcmoE31Gd7hZ9zG4GkHa+K0eTV4Ol6TC1ENP6wWX4GyHvo2Yr3z2N1w" crossorigin="anonymous"></script>
-    <!-- Bootstrap Bundle JS (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-qDflndd4msC6zzc0l+Oup3Hq4nO1E2C+ePC61Jhlv+I2bT09r+M5hK7d8de8+ljr" crossorigin="anonymous"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize map with Saudi Arabia coordinates
+            const map = L.map('map').setView([23.8859, 45.0792], 5);
+            let marker = null;
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Handle map click event
+            map.on('click', function(e) {
+                updateMarkerPosition(e.latlng);
+            });
+
+            // Handle current location button click
+            document.querySelector('.locate-btn').addEventListener('click', function() {
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser');
+                    return;
+                }
+                const btn = this;
+                btn.innerHTML = '<i class="bi bi-gear-wide-connected"></i> Locating...';
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const pos = { lat: position.coords.latitude, lng: position.coords.longitude };
+                        updateMarkerPosition(pos);
+                        map.setView([pos.lat, pos.lng], 15);
+                        btn.innerHTML = '<i class="bi bi-geo-alt"></i> Current Location';
+                    },
+                    (error) => {
+                        alert('Error getting location: ' + error.message);
+                        btn.innerHTML = '<i class="bi bi-geo-alt"></i> Current Location';
+                    }
+                );
+            });
+
+            // Add initial marker for Riyadh
+            const initialMarker = L.marker([24.7136, 46.6753])
+                .addTo(map)
+                .bindPopup('Riyadh, Saudi Arabia');
+            marker = initialMarker;
+
+            function updateMarkerPosition(latlng) {
+                // Remove existing marker if not the initial marker
+                if (marker && marker !== initialMarker) {
+                    map.removeLayer(marker);
+                }
+                // Add new marker and open popup
+                marker = L.marker([latlng.lat, latlng.lng]).addTo(map)
+                    .bindPopup(`Selected Location:<br>
+                              Latitude: ${latlng.lat.toFixed(6)}<br>
+                              Longitude: ${latlng.lng.toFixed(6)}<br>
+                              <a href="https://www.google.com/maps?q=${latlng.lat.toFixed(6).replace(',', '.')},${latlng.lng.toFixed(6).replace(',', '.')}" target="_blank">View on Google Maps</a>`)
+                    .openPopup();
+
+                // Update hidden fields (forcing invariant culture by using toFixed and replacing comma with dot)
+                document.getElementById('latitude').value = latlng.lat.toFixed(6).replace(',', '.');
+                document.getElementById('longitude').value = latlng.lng.toFixed(6).replace(',', '.');
+            }
+        });
+    </script>
 </body>
 </html>
-
-    <!-- SweetAlert2 CSS -->
-
-    <!-- SweetAlert2 JS -->
-    

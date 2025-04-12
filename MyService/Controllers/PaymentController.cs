@@ -83,8 +83,29 @@ namespace MyService.Controllers
 
             return View(payments);
         }
+        public async Task<IActionResult> DeleteAll()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser == null)
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
 
-        // Helper method to determine service pricing based on service ID.
+            var paidslist = await _context.paids
+                .Where(n => n.Request.UserId == currentUser.ToString())
+                .ToListAsync();
+
+            if (!paidslist.Any())
+            {
+                return Json(new { success = false, message = "No Orders found." });
+            }
+
+            _context.paids.RemoveRange(paidslist);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true, message = "All Orders deleted successfully." });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeletePayment(int id)

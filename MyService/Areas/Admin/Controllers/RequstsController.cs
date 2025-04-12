@@ -26,6 +26,7 @@ namespace MyService.Areas.Admin.Controllers
         {
             var requests = await _context.requests
                 .Include(r => r.Service)
+                .Include(r => r.Mapping)
                 .ToListAsync();
 
             return View(requests);
@@ -42,12 +43,10 @@ namespace MyService.Areas.Admin.Controllers
 
             var viewModel = new RequestViewModel
             {
-                RequestId = request.RequestId,
                 ServiceId = request.ServiceId,
                 OrderDate = request.OrderDate,
                 Status = request.Status,
                 Comment = request.Comment,
-                Customers = _context.customers.ToList(),
                 Services = _context.services.ToList()
             };
 
@@ -61,7 +60,7 @@ namespace MyService.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id, RequestViewModel viewModel)
         {
-            if (id != viewModel.RequestId)
+            if (id != viewModel.ServiceId)
                 return NotFound();
 
             if (ModelState.IsValid)
@@ -79,7 +78,7 @@ namespace MyService.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RequestExists(viewModel.RequestId))
+                    if (!RequestExists(viewModel.ServiceId))
                         return NotFound();
                     else
                         throw;

@@ -175,4 +175,45 @@
             });
         });
     </script>
+    <script>
+                $(document).ready(function () {
+
+        $('#deleteAllBtn').click(function () {
+                Swal.fire({
+                    title: 'Delete All Orders?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete all!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/Payment/DeleteAll', // Corrected URL
+                            type: 'POST',
+                            dataType: 'json',
+                            headers: {
+                                "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire('Deleted!', response.message, 'success')
+                                        .then(() => {
+                                            location.reload();
+                                        });
+                                } else {
+                                    Swal.fire('Error!', response.message, 'error');
+                                }
+                            },
+                            error: function () {
+                                Swal.fire('Error!', 'An error occurred while deleting basket.', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 }

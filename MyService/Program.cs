@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,20 +33,20 @@ namespace MyService
             var services = scope.ServiceProvider;
             var context = scope.ServiceProvider.GetRequiredService<MyServiceDbContext>();
             context.Database.EnsureCreated();
-           
 
-            
+
+
             try
             {
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 if (!context.services.Any())
                 {
-                    context.services.Add(new Service { Name = "Sabak", CreatedAt = DateTime.Now, Description="This is Avalible Service" });
-                    context.services.Add(new Service { Name = "electrocity" ,CreatedAt=DateTime.Now, Description = "This is Avalible Service" });
+                    context.services.Add(new Service { Name = "electrical", CreatedAt = DateTime.Now, Description = "This is Avalible Service" });
+                    context.services.Add(new Service { Name = "Plumbing", CreatedAt = DateTime.Now, Description = "This is Avalible Service" });
                     context.SaveChanges();
                 }
-                
+
 
                 await DefaultRole.SeedAsync(roleManager);
                 await DefaultUser.SeedSuperAdminAsync(userManager, roleManager);
@@ -78,7 +77,6 @@ namespace MyService
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddLocalization(options => options.ResourcesPath = "Resource");
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
@@ -100,7 +98,6 @@ namespace MyService
                 options.SupportedUICultures = supportedCultures;
 
                 // يمكنك أيضًا استخدام CookieRequestCultureProvider للسماح بحفظ اختيار اللغة لدى المستخدم
-                options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
             });
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -137,14 +134,12 @@ namespace MyService
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            // تفعيل Middleware الخاص بالتوطين باستخدام الإعدادات السابقة
+            app.UseRouting();
             app.UseRequestLocalization(localizationOptions.Value);
 
-            app.UseRouting();
             app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();

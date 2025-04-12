@@ -2,7 +2,10 @@
 @{
     ViewData["Title"] = "Request List";
 }
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<!-- Page Content -->
 <div class="wrapper">
     @if (TempData["Success"] != null)
     {
@@ -30,264 +33,267 @@
     </div>
 
     <section class="content">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <!-- Delete All Button placed in card-header -->
-                    <div class="card-header d-flex justify-content-end">
-                        <button type="button" class="btn btn-outline-danger rounded-pill" id="deleteAllBtn" style="width:20%;">
-                            حذف الكل
-                        </button>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover" id="requestsTable">
-                            <thead>
-                                <tr>
-                                    <th>Number Requests</th>
-                                    <th>Customer</th>
-                                    <th>Service</th>
-                                    <th>Comment</th>
-                                    <th>Date</th>
-                                    <th>State</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr id="requestRow_@item.RequestId">
-                                        <td>@item.RequestId</td>
-                                        <td>@item.UserId</td>
-                                        <td>@item.Service?.Name</td>
-                                        <td>
-                                            <button class="btn btn-info btn-sm" onclick="showComment('@item.Comment')">
-                                                View Comment
+        <div class="container-fluid">
+            <!-- Requests Table -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-danger rounded-pill" id="deleteAllBtn" style="width:20%;">
+                        حذف الكل
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover" id="requestsTable">
+                        <thead>
+                            <tr>
+                                <th>Number Requests</th>
+                                <th>Customer</th>
+                                <th>Service</th>
+                                <th>Comment</th>
+                                <th>Date</th>
+                                <th>Map</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="requestRow_@item.RequestId">
+                                    <td>@item.RequestId</td>
+                                    <td>@item.UserId</td>
+                                    <td>@item.Service?.Name</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" onclick="showComment('@item.Comment')">
+                                            View Comment
+                                        </button>
+                                    </td>
+                                    <td>@item.OrderDate.ToString("yyyy/MM/dd")</td>
+                                    <td>
+                                        @if (item.Mapping != null)
+                                        {
+                                            <button class="btn btn-secondary btn-sm"
+                                                    onclick="showMap('@item.Mapping.Latitude', '@item.Mapping.Longitude', '@item.Mapping.Latitude')">
+                                                عرض الخريطة
                                             </button>
-                                        </td>
-                                        <td>@item.OrderDate.ToString("yyyy/MM/dd")</td>
-                                        <td class="payment-status">
-                                            @if (item.Status)
-                                            {
-                                                <span class="badge bg-success">Completed</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="badge bg-danger">
-                                                    <a href="javascript:void(0);" data-bill-id="@item.RequestId" class="mark-paid-btn text-white" style="text-decoration: none;">
-                                                        Pending
-                                                    </a>
-                                                </span>
-                                            }
-                                        </td>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No data</span>
+                                        }
+                                    </td>
+                                    <td class="payment-status">
+                                        @if (item.Status)
+                                        {
+                                            <span class="badge bg-success">Completed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                <a href="javascript:void(0);" data-bill-id="@item.RequestId" class="mark-paid-btn text-white" style="text-decoration: none;">
+                                                    Pending
+                                                </a>
+                                            </span>
+                                        }
+                                    </td>
 
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Map Container (placed below the table) -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">الخريطة</h5>
+                </div>
+                <div class="card-body">
+                    <!-- The map will be displayed here -->
+                    <div id="map" style="height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Modal for Comment (if needed) -->
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="commentModalLabel">Comment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="commentModalBody">
+                            <!-- Comment text will be loaded here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Modal for Comment -->
-        <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="commentModalLabel">Comment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="commentModalBody">
-                        <!-- Comment text will be loaded here -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </section>
 </div>
 
 @section Scripts {
-    <script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Leaflet JS -->
 
-        function showComment(comment) {
-            // Replace potential special characters with their HTML entities
+    <script>
+        $(document).ready(function () {
+            $('#requestsTable').DataTable({
+                "autoWidth": false,
+                "responsive": true
+            });
+
+            // Delete All functionality (existing code remains)
+            document.getElementById("deleteAllBtn").addEventListener("click", function () {
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: "بمجرد الحذف، لن تتمكن من استعادة هذه الطلبات!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'نعم، احذفها!',
+                    cancelButtonText: 'لا، إلغاء!'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        try {
+                            const response = await fetch("/Admin/Requsts/DeleteAll", {
+                                method: 'POST',
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            });
+                            const data = await response.json();
+                            if (data.success) {
+                                document.querySelectorAll("#requestsTable tbody tr").forEach(row => {
+                                    row.classList.add("animate__animated", "animate__zoomOut");
+                                    setTimeout(() => row.remove(), 1000);
+                                });
+                                Swal.fire('تم الحذف!', 'تم حذف كل الطلبات بنجاح.', 'success');
+                            } else {
+                                Swal.fire('خطأ!', 'حدث خطأ ما أثناء الحذف!', 'error');
+                            }
+                        } catch (error) {
+                            console.error("Error during deletion:", error);
+                            Swal.fire('خطأ!', 'حدث خطأ ما أثناء الحذف!', 'error');
+                        }
+                    } else {
+                        Swal.fire('تم الإلغاء', 'طلباتك ما زالت بأمان!', 'info');
+                    }
+                });
+            });
+        });
+
+        $('.mark-paid-btn').on('click', function () {
+                    var btn = $(this);
+                    // Ensure that the button includes a data attribute like: data-bill-id="123"
+                    var billId = btn.data('billId'); // or use btn.data('bill-id') if your HTML attribute is named that way
+                    Swal.fire({
+                        title: 'هل أنت متأكد؟',
+                        text: "هل تريد حقا وضع علامة مدفوعة على هذا الطلب؟",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'نعم، ادفعها!',
+                        cancelButtonText: 'لا، إلغاء!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/Admin/Requsts/MarkAsPaid', // fixed endpoint name
+                                type: 'POST',
+                                data: { id: billId }, // passing the id properly
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (response.success) {
+                                        var itemContainer = btn.closest('tr');
+                                        itemContainer.addClass('animate__animated animate__zoomOut');
+                                        setTimeout(function () {
+                                            Swal.fire(
+                                                'تم الدفع!',
+                                                'تم وضع علامة مدفوعة على الطلب بنجاح.',
+                                                'success'
+                                            ).then(() => {
+                                                location.reload();
+                                            });
+                                        }, 1000);
+                                    } else {
+                                        Swal.fire(
+                                            'خطأ!',
+                                            'حدث خطأ ما أثناء وضع علامة المدفوعة على الطلب.',
+                                            'error'
+                                        );
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire(
+                                        'خطأ!',
+                                        'حدث خطأ ما!',
+                                        'error'
+                                    );
+                                }
+                            });
+                        } else {
+                            Swal.fire(
+                                'تم الإلغاء',
+                                'لم يتم تغيير حالة الطلب!',
+                                'info'
+                            );
+                        }
+                    });
+                });
+                function showComment(comment) {
             const sanitizedComment = comment
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;");
-
             document.getElementById('commentModalBody').innerHTML = sanitizedComment;
             const commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
             commentModal.show();
         }
 
-    </script>
-    <script>
-        // Delete All Requests functionality
-        document.getElementById("deleteAllBtn").addEventListener("click", function () {
-          Swal.fire({
-            title: 'هل أنت متأكد؟',
-            text: "بمجرد الحذف، لن تتمكن من استعادة هذه الطلبات!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'نعم، احذفها!',
-            cancelButtonText: 'لا، إلغاء!'
-          }).then(async (result) => {
-            if (result.isConfirmed) {
-              try {
-                // If using anti-forgery tokens, get the token from a hidden input field:
-                // const token = document.querySelector('input[name="__RequestVerificationToken"]').value;
+        // Function to display and update the map below the table
+        var map;
 
-                const response = await fetch("/Admin/Requsts/DeleteAll", {
-                  method: 'POST',
-                  headers: {
-                    "Content-Type": "application/json",
-                    // "RequestVerificationToken": token  // Uncomment if your app requires anti-forgery tokens
-                  }
-                });
-                const data = await response.json();
-                if (data.success) {
-                  // Animate and remove each table row
-                  document.querySelectorAll("#requestsTable tbody tr").forEach(row => {
-                    row.classList.add("animate__animated", "animate__zoomOut");
-                    setTimeout(() => row.remove(), 1000);
-                  });
-                  Swal.fire('تم الحذف!', 'تم حذف كل الطلبات بنجاح.', 'success');
-                } else {
-                  Swal.fire('خطأ!', 'حدث خطأ ما أثناء الحذف!', 'error');
-                }
-              } catch (error) {
-                console.error("Error during deletion:", error);
-                Swal.fire('خطأ!', 'حدث خطأ ما أثناء الحذف!', 'error');
-              }
-            } else {
-              Swal.fire('تم الإلغاء', 'طلباتك ما زالت بأمان!', 'info');
+        function showMap(latitude, longitude, locationName) {
+            // Check if the map is already initialized; if not, initialize it
+            if (!map) {
+                map = L.map('map').setView([latitude, longitude], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
             }
-          });
-        });
+            // Update the map view with the new coordinates
+            map.setView([latitude, longitude], 15);
 
-        // Mark as Paid functionality
-        $('.mark-paid-btn').on('click', function () {
-            var btn = $(this);
-            // Ensure that the button includes a data attribute like: data-bill-id="123"
-            var billId = btn.data('billId'); // or use btn.data('bill-id') if your HTML attribute is named that way
-            Swal.fire({
-                title: 'هل أنت متأكد؟',
-                text: "هل تريد حقا وضع علامة مدفوعة على هذا الطلب؟",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'نعم، ادفعها!',
-                cancelButtonText: 'لا، إلغاء!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/Admin/Requsts/MarkAsPaid', // fixed endpoint name
-                        type: 'POST',
-                        data: { id: billId }, // passing the id properly
-                        dataType: 'json',
-                        success: function (response) {
-                            if (response.success) {
-                                var itemContainer = btn.closest('tr');
-                                itemContainer.addClass('animate__animated animate__zoomOut');
-                                setTimeout(function () {
-                                    Swal.fire(
-                                        'تم الدفع!',
-                                        'تم وضع علامة مدفوعة على الطلب بنجاح.',
-                                        'success'
-                                    ).then(() => {
-                                        location.reload();
-                                    });
-                                }, 1000);
-                            } else {
-                                Swal.fire(
-                                    'خطأ!',
-                                    'حدث خطأ ما أثناء وضع علامة المدفوعة على الطلب.',
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function () {
-                            Swal.fire(
-                                'خطأ!',
-                                'حدث خطأ ما!',
-                                'error'
-                            );
-                        }
-                    });
-                } else {
-                    Swal.fire(
-                        'تم الإلغاء',
-                        'لم يتم تغيير حالة الطلب!',
-                        'info'
-                    );
-                }
-            });
-        });
+            // Remove any existing marker
+            if (window.currentMarker) {
+                map.removeLayer(window.currentMarker);
+            }
 
-        // Initialize DataTables
-        $('#requestsTable').DataTable({
-            "autoWidth": false,
-            "responsive": true
-        });
+            // Create popup content and include a link to view on Google Maps
+            var popupContent = "الموقع: " + locationName + "<br>الإحداثيات: " + latitude + ", " + longitude +
+                "<br><a href='https://www.google.com/maps?q=" + latitude + "," + longitude + "' target='_blank'>عرض على Google Maps</a>";
 
-        // Function to show comment in a modal
-               // Function to show comment in a modal
-        
+            // Add a marker to the map
+            window.currentMarker = L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(popupContent)
+                .openPopup();
 
-        // Delete single request using AJAX (optional)
-        function Delete(id) {
-            Swal.fire({
-                title: lbTitleMsgDelete,
-                text: lbTextMsgDelete,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: lbconfirmButtonText,
-                cancelButtonText: lbcancelButtonText
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/Admin/Requsts/DeleteRequest', // updated endpoint to match AJAX action
-                        type: 'POST',
-                        data: { id: id },
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response.success) {
-                                Swal.fire(
-                                    lbTitleDeletedOk,
-                                    lbMsgDeletedOkCategory,
-                                    lbSuccess
-                                );
-                                // Remove the deleted row from the table
-                                $("#requestRow_" + id).fadeOut();
-                            } else {
-                                Swal.fire(
-                                    'خطأ!',
-                                    response.message || 'حدث خطأ ما أثناء الحذف!',
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function() {
-                            Swal.fire(
-                                'خطأ!',
-                                'حدث خطأ ما أثناء الحذف!',
-                                'error'
-                            );
-                        }
-                    });
-                }
-            });
+            // Optional: scroll the page to bring the map into view
+            document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+
     </script>
 }

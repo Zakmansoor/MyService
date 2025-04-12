@@ -28,8 +28,11 @@ namespace Infarstuructre.Data
             builder.Entity<Employees>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-             
-           
+            builder.Entity<Request>()
+        .HasOne(r => r.Mapping)
+        .WithOne(l => l.Request)
+        .HasForeignKey<Mapping>(l => l.RequestId);
+
             builder.Entity<Category>().Property(x => x.Id).HasDefaultValueSql("(newid())");
             builder.Entity<LogCategory>().Property(x => x.Id).HasDefaultValueSql("(newid())");
             builder.Entity<SubCategory>().Property(x => x.Id).HasDefaultValueSql("(newid())");
@@ -54,6 +57,7 @@ namespace Infarstuructre.Data
         public DbSet<EmployeeRequest> employeeRequests { get; set; }
         public DbSet<Employees> employees { get; set; }
         public DbSet<Customer> customers { get; set; }
+        public DbSet<Mapping> Mappings { get; set; }
         public DbSet<Notification> notifications { get; set; }
         public DbSet<Request> requests { get; set; }
         public DbSet<Service> services { get; set; }

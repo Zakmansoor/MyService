@@ -252,13 +252,14 @@
                                     </a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">تواصل معنا</a>
+                            <a href="#contact" class="nav-item nav-link">تواصل معنا</a>
                         </div>
                         <a asp-action="SendRequest" asp-controller="Request"
                            class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">
                             ابدأ الآن
                         </a>
                     </div>
+                    <div class="ms-3">
                     <form id="cultureForm" asp-controller="Home" asp-action="SetLanguage" method="post">
                         <select class="form-select form-select-sm"
                                 name="culture"
@@ -270,6 +271,7 @@
                         </select>
                         <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
                     </form>
+                    </div>
                 </nav>
                 <div class="content-header">
                     <div class="container">

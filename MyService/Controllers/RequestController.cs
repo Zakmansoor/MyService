@@ -77,8 +77,15 @@ namespace MyService.Controllers
                     OrderDate = viewModel.OrderDate,
                     Status = viewModel.Status,
                     Comment = viewModel.Comment,
-                    Service = service  // Assign the loaded service entity
+                    Service = service, // Assign the loaded service entity
+                    Mapping = new Mapping
+                    {
+                        Latitude = viewModel.Latitude,
+                        Longitude = viewModel.Longitude
+                    },
                 };
+
+
 
                 // Determine the price based on the service name.
                 var paid = new Paid
@@ -114,7 +121,6 @@ namespace MyService.Controllers
         /// </summary>
         private async Task PopulateDropdownsAsync(RequestViewModel viewModel)
         {
-            viewModel.Customers = await _context.customers.ToListAsync();
             viewModel.Services = await _context.services.ToListAsync();
         }
 

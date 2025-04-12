@@ -91,6 +91,7 @@
 </div>
 
 @section Scripts {
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha384-/xUj+3OJ2JcmoE31Gd7hZ9zG4GkHa+K0eTV4Ol6TC1ENP6wWX4GyHvo2Yr3z2N1w"
             crossorigin="anonymous"></script>
@@ -101,24 +102,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
-                 <script>
-        $(document).ready(function () {
-            // Get localized strings from C#
-            var dataTableLang = {
-               
-                search: '@localizer["Search"]'
-            };
-
-            // Initialize DataTables
-            $('#notificationsTable').DataTable({
-                "autoWidth": false,
-                "responsive": true,
-                "language": dataTableLang
-            });
-        });
-           
-
-            // Handle Delete All button click using AJAX
+            // Corrected URL and ensure token is included
             $('#deleteAllBtn').click(function () {
                 Swal.fire({
                     title: 'Delete All Notifications?',
@@ -132,7 +116,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/Notifaction/DeleteAll',
+                            url: '/Notifaction/DeleteAll', // Corrected URL
                             type: 'POST',
                             dataType: 'json',
                             headers: {

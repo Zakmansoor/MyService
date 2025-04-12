@@ -225,7 +225,7 @@
                 </a>
                 <a asp-action="pymentlist" asp-controller="Payment" class="nav-item nav-link position-relative me-3">
                     <i class="fas fa-shopping-cart fa-lg"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
                             @if (showUserInfo)
                             {
                                 @pay.Count()
@@ -268,6 +268,7 @@
                         Get Started Now
                     </a>
                 </div>
+                    <div class ="ms-3">
                     <form id="cultureForm" asp-controller="Home" asp-action="SetLanguage" method="post">
                         <select class="form-select form-select-sm"
                                 name="culture"
@@ -278,7 +279,9 @@
                         </select>
                         <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
                     </form>
-
+            </div>
+                    <!-- زر فتح الفيديو -->
+                     
             </nav>
             <div class="content-header">
                 <div class="container">

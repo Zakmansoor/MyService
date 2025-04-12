@@ -138,7 +138,7 @@ namespace MyService.Controllers
 
             // Retrieve notifications associated with the current user.
             var notifications = await _context.notifications
-                .Where(n => n.UserId == currentUser.Id)
+                .Where(n => n.UserId == currentUser.ToString())
                 .ToListAsync();
 
             if (!notifications.Any())

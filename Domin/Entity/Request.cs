@@ -25,6 +25,8 @@ namespace Domin.Entity
         public Paid Paid { get; set; }
         [ForeignKey("ServiceId")]
         public virtual Service Service { get; set; }
+        public virtual Mapping Mapping { get; set; }
+
         public List<Notification>  Notification { get; set; }
     }
 }
