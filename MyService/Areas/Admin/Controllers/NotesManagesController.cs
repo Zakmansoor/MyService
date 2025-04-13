@@ -1,4 +1,5 @@
 ﻿// Controllers/NotesController.cs
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Domin.Entity;
@@ -126,13 +127,20 @@ namespace YourProjectName.Controllers
 
         // POST: Notes/DeleteAll
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAll()
         {
-            var allNotes = await _context.notes.ToListAsync();
-            _context.notes.RemoveRange(allNotes);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var Allnotes = await _context.notes.ToListAsync();
+                _context.notes.RemoveRange(Allnotes);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (e.g., using a logging framework)
+                return Json(new { success = false, error = ex.Message });
+            }
         }
 
         private bool noteExists(int id)

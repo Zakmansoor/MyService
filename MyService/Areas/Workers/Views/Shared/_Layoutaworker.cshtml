@@ -41,7 +41,10 @@
     <link rel="stylesheet" href="~/Admin/dist/css/custom.css">
     <!-- Responsive RTL -->
     <link rel="stylesheet" href="~/Admin/dist/css/responsive-rtl.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <partial name="_Natification" />
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
@@ -133,65 +136,11 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="/Admin/Accounts/Roles" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>@ResourceWeb.lbRoles</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Admin/Accounts/Registers" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>@ResourceWeb.lbRegisters</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/Admin/Categories/Categories" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>@ResourceWeb.lbCategories</p>
-                                    </a>
-                                </li>
-                            </ul>
+                            
                         </li>
                         
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
-                                <p>
-                                    الخدمات
-                                    <i class="fas fa-angle-left right"></i>
-                                    <span class="badge badge-info right">6</span>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-action="Service" asp-controller="Service"asp-area="Admin" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ادارة الخدمات</p>
-                                    </a>
-                                </li>
-                           
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    الموظفين
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Workers" asp-area="Admin" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>ادارة الموظفين</p>
-                                    </a>
-                                </li>
-                                
-                            </ul>
-                        </li>
+                       
+                       
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tree"></i>
@@ -210,48 +159,7 @@
                                 
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-                                    Payment
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                
-                                <li class="nav-item">
-                                    <a asp-controller="Paymenthistory" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Showpayments</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Editors</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>
-Notes                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                
-                                <li class="nav-item">
-                                    <a asp-controller="NotesManages" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Manages</p>
-                                    </a>
-                                </li>
-                                
-                            </ul>
-                        </li>
+                       
                     </ul>
 
                 </nav>
@@ -271,7 +179,7 @@ Notes                                    <i class="fas fa-angle-left right"></i>
         </div>
         <!--End Body-->
         <footer class="main-footer">
-            <strong>Copyright &copy; @DateTime.Now.Year <a href="http://adminlte.io">Asir.Services</a>.</strong>
+            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.0.0-rc.1

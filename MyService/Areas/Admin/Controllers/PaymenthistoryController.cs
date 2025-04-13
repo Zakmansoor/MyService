@@ -37,7 +37,7 @@ namespace MyService.Areas.Admin.Controllers
             var payments = await _context.historypaids
                 .Include(p => p.Request)
                 .ThenInclude(r => r.Service)
-                
+
                 .ToListAsync();
 
             if (payments == null || !payments.Any())
@@ -47,13 +47,28 @@ namespace MyService.Areas.Admin.Controllers
             }
 
             // Update the amount for each payment based on the predetermined price.
-            
+
 
             return View(payments);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                var allhistorypaids = await _context.historypaids.ToListAsync();
+                _context.historypaids.RemoveRange(allhistorypaids);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (e.g., using a logging framework)
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
         // POST: Payment/ProcessPayment
         // Updates the payment record (for instance, when the user enters the amount manually)
-       
+
     }
 }

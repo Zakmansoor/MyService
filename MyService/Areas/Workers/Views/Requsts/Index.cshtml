@@ -1,0 +1,191 @@
+﻿@model IEnumerable<Domin.Entity.Request>
+@{
+    ViewData["Title"] = "Request List";
+    Layout = "_Layoutaworker";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<!-- Page Content -->
+<div class="wrapper">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <partial name="_Natification" />
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Requests</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/Employees/Home/Index">@ResourceWeb.lbHomePage</a></li>
+                        <li class="breadcrumb-item active">Requests</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Requests Table -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-end">
+                    
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-hover" id="requestsTable">
+                        <thead>
+                            <tr>
+                                <th>Number Requests</th>
+                                <th>Customer</th>
+                                <th>Service</th>
+                                <th>Comment</th>
+                                <th>Date</th>
+                                <th>Map</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="requestRow_@item.RequestId">
+                                    <td>@item.RequestId</td>
+                                    <td>@item.UserId</td>
+                                    <td>@item.Service?.Name</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm" onclick="showComment('@item.Comment')">
+                                            View Comment
+                                        </button>
+                                    </td>
+                                    <td>@item.OrderDate.ToString("yyyy/MM/dd")</td>
+                                    <td>
+                                        @if (item.Mapping != null)
+                                        {
+                                            <button class="btn btn-secondary btn-sm"
+                                                    onclick="showMap('@item.Mapping.Latitude', '@item.Mapping.Longitude', '@item.Mapping.Latitude')">
+                                                عرض الخريطة
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No data</span>
+                                        }
+                                    </td>
+                                    <td class="payment-status">
+                                        @if (item.Status)
+                                        {
+                                            <span class="badge bg-success">Completed</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">
+                                                    Pending
+                                            </span>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Map Container (placed below the table) -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">الخريطة</h5>
+                </div>
+                <div class="card-body">
+                    <!-- The map will be displayed here -->
+                    <div id="map" style="height: 400px;"></div>
+                </div>
+            </div>
+
+            <!-- Modal for Comment (if needed) -->
+            <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="commentModalLabel">Comment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="commentModalBody">
+                            <!-- Comment text will be loaded here -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Leaflet JS -->
+
+    <script>
+        $(document).ready(function () {
+            $('#requestsTable').DataTable({
+                "autoWidth": false,
+                "responsive": true
+            });
+
+          
+                function showComment(comment) {
+            const sanitizedComment = comment
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+            document.getElementById('commentModalBody').innerHTML = sanitizedComment;
+            const commentModal = new bootstrap.Modal(document.getElementById('commentModal'));
+            commentModal.show();
+        }
+
+        // Function to display and update the map below the table
+        var map;
+
+        function showMap(latitude, longitude, locationName) {
+            // Check if the map is already initialized; if not, initialize it
+            if (!map) {
+                map = L.map('map').setView([latitude, longitude], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+            }
+            // Update the map view with the new coordinates
+            map.setView([latitude, longitude], 15);
+
+            // Remove any existing marker
+            if (window.currentMarker) {
+                map.removeLayer(window.currentMarker);
+            }
+
+            // Create popup content and include a link to view on Google Maps
+            var popupContent = "الموقع: " + locationName + "<br>الإحداثيات: " + latitude + ", " + longitude +
+                "<br><a href='https://www.google.com/maps?q=" + latitude + "," + longitude + "' target='_blank'>عرض على Google Maps</a>";
+
+            // Add a marker to the map
+            window.currentMarker = L.marker([latitude, longitude]).addTo(map)
+                .bindPopup(popupContent)
+                .openPopup();
+
+            // Optional: scroll the page to bring the map into view
+            document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+    </script>
+}
