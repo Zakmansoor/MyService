@@ -9,28 +9,69 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyService.Areas.Workers.Controllers
+namespace MyService.Areas.WorkersEmp.Controllers
 {
-    [Area("Workers")]
+    [Area("WorkersEmp")]
     [Authorize]
-    public class RequstsController : Controller
+    public class RequstsempController : Controller
     {
+        #region Declaration
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly MyServiceDbContext _context;
-        public RequstsController(MyServiceDbContext context)
+        #endregion
+
+        #region Constructor
+        public RequstsempController(RoleManager<IdentityRole> roleManager,
+            UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, MyServiceDbContext context)
         {
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
+        #endregion
+
         [Authorize(Roles = "Admin")]
+
 
         public async Task<IActionResult> Index()
         {
-            var requests = await _context.requests
-                .Include(r => r.Service)
-                .Include(r => r.Mapping)
-                .ToListAsync();
+            try
+            {
+                // Get current user
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser == null)
+                {
+                    return Unauthorized(); // Or redirect to login
+                }
 
-            return View(requests);
-        } 
+                // Get employee record
+                var currentEmployee = await _context.employees
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(e => e.UserId == currentUser.UserName);
+
+                if (currentEmployee == null)
+                {
+                    return NotFound("Employee record not found");
+                }
+
+                // Get requests for employee's service
+                var requests = await _context.requests
+                    .Include(r => r.Service)
+                    .Include(r => r.Mapping)
+                    .Where(r => r.ServiceId == currentEmployee.SeID)
+                    .ToListAsync();
+
+                return View(requests);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "An error occurred");
+            }
+        }
 
         public async Task<IActionResult> Edit(int? id)
         {

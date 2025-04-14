@@ -9,7 +9,6 @@ namespace Domin.Entity
         public int EmployeeRequestId { get; set; }
         public int EmployeeId { get; set; }
         public DateTime? CreatedAt { get; set; }
-        [ForeignKey("EmployeeId")]
-        public  Employees? Employee { get; set; }
+      
     }
 }

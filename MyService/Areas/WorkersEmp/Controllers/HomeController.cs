@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyService.Areas.Workers.Controllers
+namespace MyService.Areas.WorkersEmp.Controllers
 {
-    [Area("Workers")]
+    [Area("WorkersEmp")]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -10,9 +10,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MyService.Areas.Workers.Controllers
+namespace MyService.Areas.WorkersEmp.Controllers
 {
-    [Area("Workers")]
+    [Area("WorkersEmp")]
 
     [Authorize]
     public class AccountsController : Controller
@@ -171,7 +171,6 @@ namespace MyService.Areas.Workers.Controllers
 
         }
 
-        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -183,22 +182,23 @@ namespace MyService.Areas.Workers.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
-            
-       {
+            {
                 var user = await _userManager.FindByNameAsync(model.Eamil);
                 if (!(await _userManager.IsInRoleAsync(user, Helper.Roles.Admin.ToString())))
                 {
                     ViewBag.ErrorLogin = true;
-                    return View(model);
+                    return View(model); // Removed the incorrect second argument
                 }
                 var Result = await _signInManager.PasswordSignInAsync(model.Eamil,
                     model.Password, model.RememberMy, false);
                 if (Result.Succeeded)
-                    return RedirectToAction("Index", "Home", new { Area = "Workers" });
+                {
+                    return RedirectToAction("Index", "Home", new { Area = "WorkersEmp" });
+                }
                 else
                     ViewBag.ErrorLogin = false;
             }
-            return View(model);
+            return View(model); // Removed the incorrect second argument
         }
 
 

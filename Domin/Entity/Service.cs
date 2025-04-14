@@ -24,6 +24,7 @@ namespace Domin.Entity
 
         public bool IsActive { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
+        public  ICollection<Employees> Employees { get; set; }
 
     }
 }

@@ -1,174 +1,196 @@
 ﻿@model EmployeesViewModel
-
 @{
     ViewData["Title"] = "Employees";
-    Layout = "_Layoutadmin";
-
+    Layout = "_LayoutAdmin"; // Ensure this matches your admin layout
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-<partial name="_Natification" />
 
-
-<div class="wrapper">
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
-
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">@ResourceWeb.lbManageEmployees</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/Admin/Home/Index">@ResourceWeb.lbHomePage</a></li>
-                        <li class="breadcrumb-item active">@ResourceWeb.lbManageEmployees</li>
-                    </ol>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Employee Management</h6>
+            <button class="btn btn-primary float-right" onclick="showModal()">Add Employee</button>
         </div>
-    </div>
-
-    <!-- Employee Table -->
-    <section class="content">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" onclick="Rest()" data-bs-target="#employeeModal">@ResourceWeb.lbAddPage</button>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered table-hover" id="employeesId">
-                            <thead>
-                                <tr>
-                                    <th>@ResourceWeb.htName</th>
-                                    <th>@ResourceWeb.htEmail</th>
-                                    <th>@ResourceWeb.htPhone</th>
-                                    <th>@ResourceWeb.htDate</th>
-                                    <th>@ResourceWeb.htStatue</th>
-                                    <th>@ResourceWeb.htFilecv</th>
-                                    <th>@ResourceWeb.htAction</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model != null && Model.Employees.Any())
-                                {
-                                    foreach (var employee in Model.Employees)
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="employeeTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Join Date</th>
+                            <th>Resume</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model.Employees)
+                        {
+                            <tr>
+                                <td>@employee.Name</td>
+                                <td>@employee.Email</td>
+                                <td>@employee.PhoneNumber</td>
+                                <td>@employee.Service?.Name</td> <!-- Show service name -->
+                                <td>@employee.Created?.ToString("d")</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(employee.TitleResume))
                                     {
-                                        <tr>
-                                            <td>@employee.Name</td>
-                                            <td>@employee.Email</td>
-                                            <td>@employee.PhoneNumber</td>
-                                            <td>@employee.Created</td>
-                                            <td><input type="checkbox" disabled checked="@employee.IsActive" style="width:35px; height:35px"></td>
-                                            <td>
-                                                @if (!string.IsNullOrEmpty(employee.TitleResume))
-                                                {
-                                                    <a href="@Url.Action("DownloadFile", "Workers", new { fileName = employee.TitleResume })" target="_blank">Download</a> <span>|</span>
-                                                    <a id="ResumeLink" onclick="ViewResume('@employee.TitleResume')" href="#" target="_blank">View</a>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badget badge-pill">لايوجد</span>
-                                                }
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-info"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#employeeModal"
-                                                        onclick="EditEmployee('@employee.Id','@employee.Name','@employee.Email','@employee.PhoneNumber','@employee.Created','@employee.IsActive','@employee.TitleResume')">
-                                                    @ResourceWeb.lbbtnEdit
-                                                </button>
-                                                <form method="post" asp-action="DeleteEmployee" asp-controller="Workers" style="display:inline;">
-                                                    <input type="hidden" name="id" value="@employee.Id" />
-                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        <a href="/Web/resumes/@employee.TitleResume" download>Download</a>
+                                        <span>|</span>
+                                        <a href="#" onclick="viewResume('@employee.TitleResume')">View</a>
                                     }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="7" class="text-center">لايوجد</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modal for Add/Edit Employee -->
-    <div class="modal fade" id="employeeModal" tabindex="-1" aria-labelledby="employeeModalLabel" aria-hidden="true">
-        <div class="modal-dialog card card-success card-outline">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="employeeModalLabel">@ResourceWeb.titleEmployeeAdd</h5>
-                    <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</a>
-                </div>
-                <div class="modal-body">
-                    <form method="post" enctype="multipart/form-data" asp-action="SaveEmployee" asp-controller="Workers">
-                        <input type="hidden" asp-for="NewEmployees.Id" id="EmployeeId" />
-
-                        <div class="mb-3">
-                            <label asp-for="NewEmployees.Name" class="form-label">@ResourceWeb.htName</label>
-                            <input asp-for="NewEmployees.Name" type="text" class="form-control" id="Name" />
-                            <span asp-validation-for="NewEmployees.Name" class="text-danger"></span>
-
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="NewEmployees.Email" class="form-label">@ResourceWeb.htEmail</label>
-                            <input asp-for="NewEmployees.Email" type="email" class="form-control" id="Email" />
-                            <span asp-validation-for="NewEmployees.Email" class="text-danger"></span>
-
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="NewEmployees.Phone" class="form-label">@ResourceWeb.htPhone</label>
-                            <input asp-for="NewEmployees.Phone" type="text" class="form-control" id="Phone" />
-                            <span asp-validation-for="NewEmployees.Phone" class="text-danger"></span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="NewEmployees.Date" class="form-label">@ResourceWeb.htDate</label>
-                            <input asp-for="NewEmployees.Date" type="date" class="form-control" id="DateCreate" />
-                            <span asp-validation-for="NewEmployees.Date" class="text-danger"></span>
-
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="NewEmployees.IsActive" class="control-lable">@ResourceWeb.lbActiveUser</label>
-                            <input type="checkbox" class="form-control" asp-for="NewEmployees.IsActive" id="EmployeeActive" />
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label asp-for="NewEmployees.TitleResume" class="form-label">@ResourceWeb.htFilecv</label>
-                            <input asp-for="NewEmployees.TitleResume" type="file" class="form-control" id="Resume" />
-
-                        </div>
-                        <button type="submit" class="btn btn-primary">@ResourceWeb.lbbtnSave</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@ResourceWeb.lbcancelButtonText</button>
-                    </form>
-                </div>
+                                </td>
+                                <td>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input"
+                                               id="status-@employee.Id" @(employee.IsActive ? "checked" : "")
+                                               onchange="updateStatus(@employee.Id, this.checked)">
+                                        <label class="custom-control-label" for="status-@employee.Id"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-info"
+                                            onclick="editEmployee('@employee.Id', '@employee.Name',
+                                                    '@employee.Email', '@employee.PhoneNumber',
+                                                    '@employee.Created?.ToString("yyyy-MM-dd")',
+                                                    @employee.IsActive.ToString().ToLower(),
+                                                    @employee.SeID)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger"
+                                            onclick="confirmDelete(@employee.Id)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <script src="~/Modules/Employees.js"></script>
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Add Employee</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form asp-action="SaveEmployee" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" asp-for="NewEmployees.Id" />
 
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input asp-for="NewEmployees.Name" class="form-control" required>
+                        <span asp-validation-for="NewEmployees.Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input asp-for="NewEmployees.Email" type="email" class="form-control" required>
+                        <span asp-validation-for="NewEmployees.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input asp-for="NewEmployees.Phone" class="form-control" required>
+                        <span asp-validation-for="NewEmployees.Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Service *</label>
+                        <select asp-for="NewEmployees.servisId"
+                                asp-items="@(new SelectList(Model.services, "ServiceID", "Name"))"
+                                class="form-control" required>
+                            <option value="">-- Select Service --</option>
+                        </select>
+                        <span asp-validation-for="NewEmployees.servisId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Resume (PDF only)</label>
+                        <div class="custom-file">
+                            <input type="file" asp-for="NewEmployees.TitleResume"
+                                   class="custom-file-input" accept=".pdf">
+                            <label class="custom-file-label">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input"
+                                   asp-for="NewEmployees.IsActive" id="statusSwitch">
+                            <label class="custom-control-label" for="statusSwitch">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
     <script>
-        let lbTitleEdit = '@Html.Raw(ResourceWeb.titleEmployeeُEidte)';
-        let lbTitleAdd = '@Html.Raw(ResourceWeb.titleEmployeeAdd)';
-        let PathResum = '@Html.Raw(Helper.PathResume)';
+        // Initialize DataTable
+        $(document).ready(function () {
+            $('#employeeTable').DataTable();
+        });
+
+        function showModal() {
+            $('#employeeModal').modal('show');
+            $('#modalTitle').text('Add Employee');
+            resetForm();
+        }
+        
+        function editEmployee(id, name, email, phone, date, isActive, serviceId) {
+            $('#modalTitle').text('Edit Employee');
+            $('#NewEmployees_Id').val(id);
+            $('#NewEmployees_Name').val(name);
+            $('#NewEmployees_Email').val(email);
+            $('#NewEmployees_Phone').val(phone);
+            $('#NewEmployees_Date').val(date);
+            $('#statusSwitch').prop('checked', isActive);
+            $('#NewEmployees_servisId').val(serviceId);
+            $('#employeeModal').modal('show');
+        }
+
+        function resetForm() {
+            $('#employeeForm')[0].reset();
+            $('#NewEmployees_Id').val('');
+            $('.custom-file-label').html('Choose file');
+        }
+
+        function viewResume(fileName) {
+            window.open(`/Web/resumes/${fileName}`, '_blank');
+        }
+
+        function updateStatus(employeeId, isActive) {
+            $.post('/Admin/Employees/UpdateStatus', {
+                id: employeeId,
+                isActive: isActive
+            }).fail(function () {
+                toastr.error('Error updating status');
+            });
+        }
+
+        function confirmDelete(id) {
+            if (confirm('Are you sure you want to delete this employee?')) {
+                $.post('/Admin/Employees/Delete', { id: id })
+                    .done(() => window.location.reload())
+                    .fail(() => toastr.error('Delete failed'));
+            }
+        }
     </script>
 }
