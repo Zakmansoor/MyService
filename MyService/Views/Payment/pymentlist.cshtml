@@ -1,9 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Options
+@using System.Globalization
+@inject IViewLocalizer localizer
+
 @inject IOptions<RequestLocalizationOptions> option
 @model IEnumerable<Domin.Entity.Paid>
 @{
     ViewData["Title"] = "Payments";
+    @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
+
+    }
 }
 <div class="wrapper">
     <!-- Flash Messages -->
@@ -48,39 +61,41 @@
                         <table class="table table-bordered table-hover" id="paymentsTable">
                             <thead>
                                 <tr>
-                                    <th>Payment ID</th>
-                                    <th>User ID</th>
-                                    <th>Service Name</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>@localizer["Name"]</th>
+
+                                    <th>@localizer["Amount"]</th>
+                                    <th>@localizer["Date"]</th>
+                                    <th>@localizer["Status"]</th>
+                                    <th>@localizer["Actions"]</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var payment in Model)
                                 {
                                     <tr id="paymentRow_@payment.Id">
-                                        <td>@payment.Id</td>
-                                        <td>@payment.Request.UserId</td>
-                                        <td>@payment.NameServece</td>
+
+
+                                        <td> @CultureInfo.CurrentCulture.Name.StartsWith("en") ? @payment.Request.Service.Name:@payment.Request.Service.NameAr</td>
                                         <td>@payment.amount.ToString("C")</td>
                                         <td>@payment.DateTime.ToString("MMM dd, yyyy hh:mm tt")</td>
                                         <td>
                                             @if (payment.makesend)
-                                            {
-                                                <span class="badge bg-success">Success</span>
+                                            { @if (CultureInfo.CurrentCulture.Name.StartsWith("en"))
+                                                {
+
+                                                }
+                                                <span class="badge bg-success">@localizer["Success"]</span>
                                             }
                                             else
                                             {
-                                                <span class="badge bg-warning">Pending</span>
+                                                <span class="badge bg-warning">@localizer["Pendding"]</span>
                                             }
                                         </td>
                                         <td>
                                             @if (!payment.makesend)
                                             {
                                                 <a href="javascript:void(0);" class="btn btn-primary btn-sm send-payment-btn" data-pay-id="@payment.Id">
-                                                    Send Payment
+                                                    @localizer["Send"]
                                                 </a>
                                             }
                                             else
@@ -93,7 +108,7 @@
                             </tbody>
                             <tfoot class="bg-light">
                                 <tr>
-                                    <td colspan="3" class="text-end fw-bold">Total:</td>
+                                    <td colspan="3" class="text-end fw-bold">@localizer["Total"]:</td>
                                     <td colspan="4" class="text-success fw-bold">@Model.Sum(p => p.amount).ToString("c")</td>
                                 </tr>
                             </tfoot>
@@ -117,7 +132,7 @@
     <script>
         $(document).ready(function () {
             // Initialize DataTables for responsive table design
-            
+
 
             // Handle Send Payment button click
             $(document).on('click', '.send-payment-btn', function (e) {

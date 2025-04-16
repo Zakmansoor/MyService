@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +22,92 @@ namespace Infarstuructre.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            builder.Entity<Employees>()
+
+        base.OnModelCreating(builder);
+            builder.Entity<Service>().HasData(
+                new Service
+                {
+                    ServiceID = 1,
+                    Name = "Electrical Maintenance",
+                    NameAr = "صيانة كهربائية",
+                    Description = "إصلاح الأعطال الكهربائية وتركيب الأنظمة",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 2,
+                    Name = "Plumbing",
+                    NameAr = "سباكة",
+                    Description = "إصلاح تسربات المياه وتركيب المواسير",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 3,
+                    Name = "AC Maintenance",
+                    NameAr = "صيانة تكييف",
+                    Description = "تنظيف وصيانة أنظمة التبريد",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 4,
+                    Name = "Home Appliances",
+                    NameAr = "أجهزة منزلية",
+                    Description = "إصلاح الغسالات والثلاجات",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 5,
+                    Name = "Painting",
+                    NameAr = "دهان",
+                    Description = "خدمات الدهان الداخلي والخارجي",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 6,
+                    Name = "Carpentry",
+                    NameAr = "نجارة",
+                    Description = "تصليح الأثاث وتركيب الأرضيات",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 7,
+                    Name = "Glass Installation",
+                    NameAr = "تركيب زجاج",
+                    Description = "إصلاح النوافذ المكسورة",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                },
+                new Service
+                {
+                    ServiceID = 8,
+                    Name = "Tiling",
+                    NameAr = "تركيب بلاط",
+                    Description = "تركيب البلاط الجديد وإصلاح التالف",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                }, 
+                new Service
+                {
+                    ServiceID = 10,
+                    Name = "Cleaning Services",
+                    NameAr = "خدمات تنظيف",
+                    Description = "تنظيف المنازل والمكاتب",
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                }
+);
+builder.Entity<Employees>()
     .HasKey(e => e.Id);
 
             builder.Entity<Employees>()

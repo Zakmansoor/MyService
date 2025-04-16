@@ -41,10 +41,7 @@
     <link rel="stylesheet" href="~/Admin/dist/css/custom.css">
     <!-- Responsive RTL -->
     <link rel="stylesheet" href="~/Admin/dist/css/responsive-rtl.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <partial name="_Natification" />
 </head>
-
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
@@ -136,11 +133,7 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
-                            
-                        </li>
-                        
-                       
-                       
+                           
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-tree"></i>
@@ -151,7 +144,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a asp-action="Index" asp-controller="Requstsemp" class="nav-link">
+                                    <a asp-action="Index"asp-controller="Requsts" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Show Requests</p>
                                     </a>
@@ -159,7 +152,7 @@
                                 
                             </ul>
                         </li>
-                       
+                        
                     </ul>
 
                 </nav>
@@ -179,7 +172,7 @@
         </div>
         <!--End Body-->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="http://adminlte.io">Asir.Services</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.0.0-rc.1

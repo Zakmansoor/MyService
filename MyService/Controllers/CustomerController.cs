@@ -340,25 +340,27 @@ namespace MyService.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            var user = await _userManager.FindByNameAsync(model.Eamil);
+
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.Eamil);
+                if (await _userManager.IsInRoleAsync(user, Helper.Roles.SuperAdmin.ToString()))
+                {
+                    // إعادة التوجيه إلى الصفحة الرئيسية في الـ Area الخاص بالإدارة
+                    ViewBag.ErrorLogin = false;
+                }
                 var result = await _signInManager.PasswordSignInAsync(model.Eamil, model.Password, model.RememberMy, false);
                 if (result.Succeeded)
                 {
-                    if (await _userManager.IsInRoleAsync(user, Helper.Roles.SuperAdmin.ToString()))
-                    {
-                        // إعادة التوجيه إلى الصفحة الرئيسية في الـ Area الخاص بالإدارة
-                        return RedirectToAction("Index", "Home", new { area = "Admin" });
-                    }
-                    else
-                    {
+                    
+                  
                         // إعادة التوجيه إلى الصفحة الرئيسية العادية
                         return RedirectToAction("Index", "Home");
                     }
-                }
+                
             }
             return View(model);
         }

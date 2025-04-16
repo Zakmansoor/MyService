@@ -1,6 +1,20 @@
 ﻿@inject UserManager<ApplicationUser> userManager
 @inject SignInManager<ApplicationUser> signInManager
-
+@{
+    ApplicationUser currentUser = null;
+    bool showUserInfo = false; // تعيين القيمة الافتراضية
+    if (signInManager.IsSignedIn(User))
+    {
+        currentUser = await userManager.GetUserAsync(User);
+        // إذا كان المستخدم موجودًا، نقوم بالتحقق من دوره
+        if (currentUser != null)
+        {
+            // إذا لم يكن المستخدم من Admin أو SuperAdmin، نعرض بيانات المستخدم
+            showUserInfo = (await userManager.IsInRoleAsync(currentUser, "Admin")
+                             );
+        }
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +67,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
 
-                
+
             </ul>
 
             <!-- SEARCH FORM -->
@@ -68,7 +82,7 @@
                 </div>
             </form>
 
-            
+
             <!-- Notification Details Modal -->
             <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -94,8 +108,8 @@
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
                 <img src="~/Admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                     style="opacity: .8">
-                <span class="brand-text font-weight-light">Admin </span>
+                style="opacity: .8">
+                <span class="brand-text font-weight-light">@if (User.IsInRole("Admin")) ;   Employees </span>
             </a>
 
             <!-- Sidebar -->
@@ -105,18 +119,18 @@
                     @if(signInManager.IsSignedIn(User))
                     {
 
-                    <div class="image">
-                        <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" class="img-circle elevation-2" alt="User Image">
-                    </div>
+                        <div class="image">
+                            <img src="@Helper.PathImageuser@((await userManager.GetUserAsync(User)).ImageUser)" class="img-circle elevation-2" alt="User Image">
+                        </div>
 
-                    <div class="info">
-                        <a href="#" class="d-block">@((await userManager.GetUserAsync(User)).Name)</a>
+                        <div class="info">
+                            <a href="#" class="d-block">@((await userManager.GetUserAsync(User)).Name)</a>
 
-                        <form asp-action="Logout" asp-controller="Accounts" method="post">
-                            <input  type="submit" value="تسجيل الخروج" style="border:none; color:orange;background-color:#343a40">
-                        </form>
-                    </div>
-                     }
+                            <form asp-action="Logout" asp-controller="Accounts" method="post">
+                                <input  type="submit" value="تسجيل الخروج" style="border:none; color:orange;background-color:#343a40">
+                            </form>
+                        </div>
+                    }
 
                 </div>
 
@@ -133,6 +147,21 @@
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                                        <li class="nav-item">
+                                            <a href="@Url.Action("Index", "Requsts", new { area = "Admin" })" class="nav-link">
+                                                <i class="nav-icon fas fa-list"></i>
+                                                <p>Requests</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    
+
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/Admin/Accounts/Roles" class="nav-link active">
@@ -153,7 +182,6 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
                         
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link">
@@ -251,7 +279,7 @@ Notes                                    <i class="fas fa-angle-left right"></i>
                                 </li>
                                 
                             </ul>
-                        </li>
+                        </li>}
                     </ul>
 
                 </nav>

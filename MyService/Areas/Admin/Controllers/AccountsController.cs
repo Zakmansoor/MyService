@@ -236,11 +236,19 @@ namespace MyService.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+[AllowAnonymous
+            
+            
+            
+            
+            
+            ]        public async Task<IActionResult> Login(LoginViewModel model)
         {
+            var user = await _userManager.FindByNameAsync(model.Eamil);
+
             if (ModelState.IsValid)
             {
+                
                 var Result = await _signInManager.PasswordSignInAsync(model.Eamil,
                     model.Password, model.RememberMy, false);
                 if (Result.Succeeded)
@@ -250,7 +258,6 @@ namespace MyService.Areas.Admin.Controllers
             }
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

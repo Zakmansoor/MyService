@@ -4,6 +4,7 @@ using Infarstuructre.IRepository;
 using Infarstuructre.IRepository.ServicesRepository;
 using Infarstuructre.Seeds;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,8 +32,7 @@ namespace MyService
             var host = CreateHostBuilder(args).Build();
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
-            var context = scope.ServiceProvider.GetRequiredService<MyServiceDbContext>();
-            context.Database.EnsureCreated();
+        
 
 
 
@@ -40,12 +40,7 @@ namespace MyService
             {
                 var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                if (!context.services.Any())
-                {
-                    context.services.Add(new Service { Name = "electrical", CreatedAt = DateTime.Now, Description = "This is Avalible Service" });
-                    context.services.Add(new Service { Name = "Plumbing", CreatedAt = DateTime.Now, Description = "This is Avalible Service" });
-                    context.SaveChanges();
-                }
+               
 
 
                 await DefaultRole.SeedAsync(roleManager);
@@ -146,14 +141,17 @@ namespace MyService
 
             app.UseEndpoints(endpoints =>
             {
+            
                 endpoints.MapControllerRoute(
                     name: "areas",
-                    pattern: "{area:exists}/{controller=Accounts}/{action=Login}/{id?}");
-
+                    pattern: "{area:exists}/{controller=Accounts}/{action=Login}/{id?}"
+             );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        }
     }
-}
+

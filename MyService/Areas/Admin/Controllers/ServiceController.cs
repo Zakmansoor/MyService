@@ -48,7 +48,7 @@ namespace MyService.Areas.Admin.Controllers
                         ServiceID = service.NewService.ServiceID,
                         Name = service.NewService.Name,
                         Description = service.NewService.Description,
-                        CreatedAt = service.NewService.CreatedAt,
+                        CreatedAt = (DateTime)service.NewService.CreatedAt,
                         IsActive = service.NewService.IsActive
                     };
 

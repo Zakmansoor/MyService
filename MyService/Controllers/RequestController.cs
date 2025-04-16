@@ -90,7 +90,7 @@ namespace MyService.Controllers
                 // Determine the price based on the service name.
                 var paid = new Paid
                 {
-                    amount = GetPriceForService(service.Name),
+                    amount = GetPriceForService(service.ServiceID),
                     DateTime = DateTime.Now,
                     NameServece = service.Name,
                     Request = request
@@ -129,25 +129,22 @@ namespace MyService.Controllers
         /// </summary>
         /// <param name="serviceName">The name of the service.</param>
         /// <returns>The price for the service.</returns>
-        private double GetPriceForService(string serviceName)
+        private double GetPriceForService(int serviceId)
         {
-            if (string.IsNullOrWhiteSpace(serviceName))
-                return 0;
-
-            // Convert to lower case for case-insensitive comparison.
-            var lowerName = serviceName.ToLowerInvariant();
-
-            // For example, if the service name is "سبالك" then the price is 1000.
-            if (lowerName == "Plumbing")
-                return 1000;
-            // Add other service pricing rules here.
-            else if (lowerName == "plumbing")
-                return 750;
-            else if (lowerName == "electrical")
-                return 850;
-            // Default price if no rule matches.
-            else
-                return 0;
+            return serviceId switch
+            {
+                1 => 1200,    // كهرباء - Electrical
+                2 => 1000,    // سباكة - Plumbing
+                3 => 900,     // تكييف - AC Maintenance
+                4 => 800,     // تنظيف - Cleaning
+                5 => 750,     // دهان - Painting
+                6 => 950,     // نجارة - Carpentry
+                7 => 700,     // زجاج - Glass
+                8 => 850,     // بلاط - Tiling
+                9 => 600,     // مكافحة آفات - Pest Control
+                10 => 650,   // حدادة - Metal Works
+                _ => 0       // أي ID غير موجود
+            };
         }
     }
 }

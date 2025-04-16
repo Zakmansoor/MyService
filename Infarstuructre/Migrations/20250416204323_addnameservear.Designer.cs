@@ -4,6 +4,7 @@ using Infarstuructre.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infarstuructre.Migrations
 {
     [DbContext(typeof(MyServiceDbContext))]
-    partial class MyServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250416204323_addnameservear")]
+    partial class addnameservear
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,7 +427,8 @@ namespace Infarstuructre.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceID"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -437,100 +440,14 @@ namespace Infarstuructre.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ServiceID");
 
                     b.ToTable("services");
-
-                    b.HasData(
-                        new
-                        {
-                            ServiceID = 1,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(212),
-                            Description = "إصلاح الأعطال الكهربائية وتركيب الأنظمة",
-                            IsActive = true,
-                            Name = "Electrical Maintenance",
-                            NameAr = "صيانة كهربائية"
-                        },
-                        new
-                        {
-                            ServiceID = 2,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(215),
-                            Description = "إصلاح تسربات المياه وتركيب المواسير",
-                            IsActive = true,
-                            Name = "Plumbing",
-                            NameAr = "سباكة"
-                        },
-                        new
-                        {
-                            ServiceID = 3,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(217),
-                            Description = "تنظيف وصيانة أنظمة التبريد",
-                            IsActive = true,
-                            Name = "AC Maintenance",
-                            NameAr = "صيانة تكييف"
-                        },
-                        new
-                        {
-                            ServiceID = 4,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(218),
-                            Description = "إصلاح الغسالات والثلاجات",
-                            IsActive = true,
-                            Name = "Home Appliances",
-                            NameAr = "أجهزة منزلية"
-                        },
-                        new
-                        {
-                            ServiceID = 5,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(220),
-                            Description = "خدمات الدهان الداخلي والخارجي",
-                            IsActive = true,
-                            Name = "Painting",
-                            NameAr = "دهان"
-                        },
-                        new
-                        {
-                            ServiceID = 6,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(222),
-                            Description = "تصليح الأثاث وتركيب الأرضيات",
-                            IsActive = true,
-                            Name = "Carpentry",
-                            NameAr = "نجارة"
-                        },
-                        new
-                        {
-                            ServiceID = 7,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(223),
-                            Description = "إصلاح النوافذ المكسورة",
-                            IsActive = true,
-                            Name = "Glass Installation",
-                            NameAr = "تركيب زجاج"
-                        },
-                        new
-                        {
-                            ServiceID = 8,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(225),
-                            Description = "تركيب البلاط الجديد وإصلاح التالف",
-                            IsActive = true,
-                            Name = "Tiling",
-                            NameAr = "تركيب بلاط"
-                        },
-                        new
-                        {
-                            ServiceID = 10,
-                            CreatedAt = new DateTime(2025, 4, 17, 1, 0, 39, 467, DateTimeKind.Local).AddTicks(226),
-                            Description = "تنظيف المنازل والمكاتب",
-                            IsActive = true,
-                            Name = "Cleaning Services",
-                            NameAr = "خدمات تنظيف"
-                        });
                 });
 
             modelBuilder.Entity("Domin.Entity.SubCategory", b =>

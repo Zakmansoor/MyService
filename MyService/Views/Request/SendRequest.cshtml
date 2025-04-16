@@ -88,7 +88,8 @@
                             <div class="form-group">
                                 <label class="control-label">@localizer["Marquee"]</label>
                                 <select asp-for="ServiceId" class="form-control"
-                                        asp-items="@(new SelectList(Model.Services, "ServiceID", "Name"))">
+                                        asp-items="@(new SelectList(Model.Services, "ServiceID",  CultureInfo.CurrentCulture.Name.StartsWith("ar") ? "NameAr" : "Name"))">
+                                    ))">
                                     <option value="">@localizer["Marquee"]</option>
                                 </select>
                                 <span asp-validation-for="ServiceId" class="text-danger"></span>

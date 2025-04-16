@@ -36,11 +36,15 @@
         <div class="container-fluid">
             <!-- Requests Table -->
             <div class="card mb-4">
-                <div class="card-header d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-danger rounded-pill" id="deleteAllBtn" style="width:20%;">
+                @if (User.IsInRole("SuperAdmin"))
+                {
+
+
+                    <div class="card-header d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-danger rounded-pill" id="deleteAllBtn" style="width:20%;">
                         حذف الكل
                     </button>
-                </div>
+                </div>}
                 <div class="card-body">
                     <table class="table table-bordered table-hover" id="requestsTable">
                         <thead>
@@ -71,7 +75,7 @@
                                         @if (item.Mapping != null)
                                         {
                                             <button class="btn btn-secondary btn-sm"
-                                                    onclick="showMap('@item.Mapping.Latitude', '@item.Mapping.Longitude', '@item.Mapping.Latitude')">
+                                            onclick="showMap('@item.Mapping.Latitude', '@item.Mapping.Longitude', '@item.Mapping.Latitude')">
                                                 عرض الخريطة
                                             </button>
                                         }
@@ -87,11 +91,19 @@
                                         }
                                         else
                                         {
-                                            <span class="badge bg-danger">
-                                                <a href="javascript:void(0);" data-bill-id="@item.RequestId" class="mark-paid-btn text-white" style="text-decoration: none;">
+                                            @if (User.IsInRole("Admin"))
+                                            {
+                                                <span class="badge bg-danger">
+                                                    Pending
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">
+                                                    <a href="javascript:void(0);" data-bill-id="@item.RequestId" class="mark-paid-btn text-white" style="text-decoration: none;">
                                                     Pending
                                                 </a>
-                                            </span>
+                                            </span>}
                                         }
                                     </td>
 
