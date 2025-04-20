@@ -1,6 +1,7 @@
 ﻿using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -344,10 +345,17 @@ namespace MyService.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Eamil);
+            //var authProperties = new AuthenticationProperties
+            //{
+            //    IsPersistent = true,
+            //    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // مدة الصلاحية 30 دقيقة
+            //};
+
+            //await _signInManager.SignInAsync(user, authProperties);
 
             if (ModelState.IsValid)
             {
-                if (await _userManager.IsInRoleAsync(user, Helper.Roles.SuperAdmin.ToString()))
+                if (!(await _userManager.IsInRoleAsync(user, Helper.Roles.Basic.ToString())))
                 {
                     // إعادة التوجيه إلى الصفحة الرئيسية في الـ Area الخاص بالإدارة
                     ViewBag.ErrorLogin = false;
@@ -355,10 +363,11 @@ namespace MyService.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Eamil, model.Password, model.RememberMy, false);
                 if (result.Succeeded)
                 {
-                    
-                  
-                        // إعادة التوجيه إلى الصفحة الرئيسية العادية
-                        return RedirectToAction("Index", "Home");
+                    user.ActiveUser = true;
+                    await _userManager.UpdateAsync(user);
+
+                    // إعادة التوجيه إلى الصفحة الرئيسية العادية
+                    return RedirectToAction("Index", "Home");
                     }
                 
             }
@@ -367,11 +376,19 @@ namespace MyService.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                user.ActiveUser = false;
+                await _userManager.UpdateAsync(user);
+            }
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Customer");
         }
+
         private async Task<string> HandleImageUpload(IFormFile imageFile)
         {
             if (imageFile == null || imageFile.Length == 0)

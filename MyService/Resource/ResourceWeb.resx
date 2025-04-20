@@ -366,6 +366,9 @@
   <data name="lbUserName" xml:space="preserve">
     <value>المستخدم</value>
   </data>
+  <data name="NameAr" xml:space="preserve">
+    <value>الاسم بالعربي</value>
+  </data>
   <data name="titleEmployeeAdd" xml:space="preserve">
     <value>اضافة الموظف</value>
   </data>

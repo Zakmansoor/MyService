@@ -1,13 +1,14 @@
-﻿Editservice = (id, name, description, date, active) => {
+﻿Editservice = (id, name,arname, description, date, active) => {
     document.getElementById("ServiceId").value = id;
     document.getElementById("Name").value = name;
+    document.getElementById("Namear").value = arname;
     document.getElementById("Description").value = description;
     // Inside Editservice function
     if (date) {
-        document.getElementById("CreatedAt").value = new Date(date).toISOString().split("T")[0];
+        document.getElementById("Createdat").value = new Date(date).toISOString().split("T")[0];
     } else {
-        document.getElementById("CreatedAt").value = "";
-    } var Active = document.getElementById("ServiceActive");
+        document.getElementById("Createdat").value = "";
+    } var Active = document.getElementById("Serviceactive");
 
     if (active == "True")
         Active.checked = true;
@@ -19,8 +20,9 @@
 function Rest() {
     document.getElementById("ServiceId").value = "";
     document.getElementById("Name").value = "";
+    document.getElementById("Namear").value = "";
     document.getElementById("Description").value = "";
-    document.getElementById("CreatedAt").value = "";
-    document.getElementById("ServiceActive").checked = false;
+    document.getElementById("Createdat").value = "";
+    document.getElementById("Serviceactive").checked = false;
     document.getElementById("serviceModalLabel").innerHTML = lbTitleAdd;
 }

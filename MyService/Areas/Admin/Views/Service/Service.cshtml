@@ -2,9 +2,13 @@
 
 @{
     ViewData["Title"] = "Service";
+    Layout = "_Layoutadmin";
+
 }
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-     <partial name="_Natification" />  
+<partial name="_Natification" /> 
+
+
 
 <div class="wrapper">
 
@@ -34,10 +38,11 @@
                         <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" onclick="Rest()" data-bs-target="#serviceModal">@ResourceWeb.lbAddPage</button>
                     </div>
                     <div class="card-body">
-                        <table class="table table-bordered table-hover" id="servicesId">
+                        <table class="table table-bordered table-hover" id="servicesTable">
                             <thead>
                                 <tr>
                                     <th>@ResourceWeb.htName</th>
+                                    <th>@ResourceWeb.NameAr</th>
                                     <th>@ResourceWeb.lbDescriptionService</th>
                                     <th>@ResourceWeb.htDate</th>
                                     <th>@ResourceWeb.htStatue</th>
@@ -51,9 +56,10 @@
                                     {
                                                         <tr>
                                                             <td>@service.Name</td>
+                                                            <td>@service.NameAr</td>
                                                             <td>@service.Description</td>
                                                             <td>@service.CreatedAt</td>
-                                                       <td><input type="checkbox" disabled checked="@service.IsActive" style="width:35px; height:35px" ></td>
+                                                       <td><input type="checkbox" disabled checked="@service.IsActive"></td>
 
 
                                                     <td>
@@ -61,7 +67,7 @@
                                                         <button class="btn btn-sm btn-info"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#serviceModal"
-onclick="Editservice('@service.ServiceID','@service.Name','@service.Description','@service.CreatedAt','@service.IsActive')"                                                    >
+onclick="Editservice('@service.ServiceID','@service.Name','@service.NameAr','@service.Description','@service.CreatedAt','@service.IsActive')"                                                    >
                                                     @ResourceWeb.lbbtnEdit
                                                                 </button>
                                                                 <form method="post" asp-action="DeleteService" asp-controller="Service" style="display:inline;">
@@ -104,6 +110,10 @@ onclick="Editservice('@service.ServiceID','@service.Name','@service.Description'
                             <label asp-for="NewService.Name" class="form-label">@ResourceWeb.htName</label>
                             <input asp-for="NewService.Name" type="text" class="form-control" id="Name"  />
 
+                        </div> <div class="mb-3">
+                            <label asp-for="NewService.NameAr" class="form-label">@ResourceWeb.NameAr</label>
+                            <input asp-for="NewService.NameAr" type="text" class="form-control" id="Namear" />
+
                         </div>
                         <div class="mb-3">
                             <label asp-for="NewService.Description" class="form-label">@ResourceWeb.lbDescriptionService</label>
@@ -114,13 +124,13 @@ onclick="Editservice('@service.ServiceID','@service.Name','@service.Description'
 
                         <div class="mb-3">
                             <label asp-for="NewService.CreatedAt" class="form-label">@ResourceWeb.htDate</label>
-                            <input asp-for="NewService.CreatedAt" type="date" class="form-control" id="CreatedAt"  />
+                            <input asp-for="NewService.CreatedAt" type="date" class="form-control" id="Createdat"  />
 
                         </div>
 
                          <div class="form-group">
                             <label asp-for="NewService.IsActive" class="control-lable">@ResourceWeb.lbActiveUser</label>
-                            <input type="checkbox" class="form-control" asp-for="NewService.IsActive" id="ServiceActive" />
+                            <input type="checkbox" class="form-control" asp-for="NewService.IsActive" id="Serviceactive" />
                         </div>
 
                         <button type="submit" class="btn btn-primary">@ResourceWeb.lbbtnSave</button>
@@ -133,14 +143,46 @@ onclick="Editservice('@service.ServiceID','@service.Name','@service.Description'
 </div>
 
 @section Scripts {
-<script src="~/Modules/Service.js"></script>
-    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Admin/dist/js/adminlte.min.js"></script>
+   
 <script>
     let lbTitleEdit = '@Html.Raw(ResourceWeb.lbAddService)';
     let lbTitleAdd = '@Html.Raw(ResourceWeb.lbUpdateService)';
+    </script>
+    <script>
+                Editservice = (id, name,arname, description, date, active) => {
+            document.getElementById("ServiceId").value = id;
+            document.getElementById("Name").value = name;
+            document.getElementById("Namear").value = arname;
+            document.getElementById("Description").value = description;
+            // Inside Editservice function
+                document.getElementById("Createdat").value=date ;
+            
+             var Active = document.getElementById("Serviceactive");
+
+            if (active == "True")
+                Active.checked = true;
+            else
+                Active.checked = false;
+            document.getElementById("serviceModalLabel").innerHTML = lbTitleEdit;
+        };
+
+        function Rest() {
+            document.getElementById("ServiceId").value = "";
+            document.getElementById("Name").value = "";
+            document.getElementById("Namear").value = "";
+            document.getElementById("Description").value = "";
+            document.getElementById("Createdat").value = "";
+            document.getElementById("Serviceactive").checked = false;
+            document.getElementById("serviceModalLabel").innerHTML = lbTitleAdd;
+        }
+        $(document).ready(function () {
+                $('#servicesTable').DataTable({
+                "autoWidth": false,
+                "responsive": true,
+                "language": {
+                    "emptyTable": "لايوجد موظفين متاحين"
+                }
+            });
+        });
 </script>
 }

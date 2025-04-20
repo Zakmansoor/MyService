@@ -23,6 +23,7 @@ namespace Domin.Entity
         public string Comment { get; set; }
        
         public Paid Paid { get; set; }
+        public historypaid historypaid { get; set; }
         [ForeignKey("ServiceId")]
         public virtual Service Service { get; set; }
         public virtual Mapping Mapping { get; set; }

@@ -40,15 +40,16 @@ namespace MyService.Areas.Admin.Controllers
 
         public async Task<IActionResult> Service(ServiceViewModel service)
         {
-            
+           
                 try
                 {
                     var serviceInput = new Service()
                     {
                         ServiceID = service.NewService.ServiceID,
                         Name = service.NewService.Name,
+                        NameAr = service.NewService.NameAr,
                         Description = service.NewService.Description,
-                        CreatedAt = (DateTime)service.NewService.CreatedAt,
+                        CreatedAt = DateTime.Now,
                         IsActive = service.NewService.IsActive
                     };
 
@@ -64,6 +65,7 @@ namespace MyService.Areas.Admin.Controllers
                         if (serviceUpdate != null)
                         {
                             serviceUpdate.Name = serviceInput.Name;
+                            serviceUpdate.NameAr = serviceInput.NameAr;
                             serviceUpdate.Description = serviceInput.Description;
                             serviceUpdate.CreatedAt = serviceInput.CreatedAt;
                             serviceUpdate.IsActive = serviceInput.IsActive;
@@ -81,8 +83,8 @@ namespace MyService.Areas.Admin.Controllers
                 {
                     TempData["Error"] = "An error occurred while saving the service.";
                     return RedirectToAction("Service");
-                }
-            
+                
+            }
             return RedirectToAction("Service");
         }
 

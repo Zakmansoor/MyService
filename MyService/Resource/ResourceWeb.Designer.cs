@@ -808,6 +808,15 @@ namespace MyService.Resource {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الاسم بالعربي.
+        /// </summary>
+        public static string NameAr {
+            get {
+                return ResourceManager.GetString("NameAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اضافة الموظف.
         /// </summary>
         public static string titleEmployeeAdd {

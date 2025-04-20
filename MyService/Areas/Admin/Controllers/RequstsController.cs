@@ -186,41 +186,62 @@ namespace MyService.Areas.Admin.Controllers
             return _context.requests.Any(e => e.RequestId == id);
         }
 
-       
+
         [HttpPost]
         public async Task<JsonResult> MarkAsPaid(int id)
         {
-            var bill = await _context.requests.FindAsync(id);
+            // 1. Load the request *and* its related historypaid entry (if any)
+            var bill = await _context.requests
+                         .Include(r => r.historypaid)
+                         .Include(r => r.Service)
+                         .FirstOrDefaultAsync(r => r.RequestId == id);
             if (bill == null)
                 return Json(new { success = false, message = "Request not found" });
 
-            // Mark the bill as paid.
+            // 2. Mark the request itself as paid
             bill.Status = true;
 
-            // Create a notification.
-            // Note: Replace the placeholder empId with the actual employee ID
-            // (e.g., by retrieving it from the logged-in user if using Identity).
-            Notification notification = new Notification
+            // 3. If there's no historypaid yet, create one; otherwise update it
+            if (bill.historypaid == null)
             {
-                // Assign the user id from the request or, if needed, from the current logged-in user.
+                bill.historypaid = new historypaid
+                {
+                    RequestId = bill.RequestId,
+                    amount = bill.Service?.Requests.Count() > 0
+                                       ? bill.Service.Requests.Count() // or however you compute amount
+                                       : 0,
+                    DateTime = DateTime.Now,
+                    makepaid = true,
+                    NameServece = bill.Service?.Name // record the service’s name
+                };
+                _context.historypaids.Add(bill.historypaid);
+            }
+            else
+            {
+                // 4. Update the existing historypaid entry
+                bill.historypaid.makepaid = true;
+                bill.historypaid.DateTime = DateTime.Now;
+                bill.historypaid.NameServece = bill.Service?.Name;
+                _context.historypaids.Update(bill.historypaid);
+            }
+
+            // 5. Create a notification for the user (unchanged)
+            var notification = new Notification
+            {
                 UserId = bill.UserId,
-                // Customize the message as required. Here we're using the request id.
                 Message = $"Request {bill.RequestId} has been marked as paid.",
                 IsRead = false,
                 CreatedAt = DateTime.Now,
-                // Set the foreign key linking back to the Request.
                 requestId = bill.RequestId,
-                // Set a placeholder employee id. Replace this with the actual employee id.
-             
             };
-
-            // Add the notification to the context.
             _context.notifications.Add(notification);
 
-            // Save both the updated request and the new notification.
+            // 6. Persist *all* of the above in one round‑trip
             await _context.SaveChangesAsync();
+
             return Json(new { success = true });
         }
+
         [HttpPost]
         public async Task<IActionResult> DeleteAll()
         {
