@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Domin.Entity;
@@ -35,12 +36,7 @@ namespace MyService.Controllers
                 .ThenInclude(r => r.Service)
                 .FirstOrDefaultAsync(p => p.Request.UserId == identityUser.Id);
 
-            if (payment == null)
-            {
-                TempData["Error"] = ".";
-                return RedirectToAction("Index", "Home");
-            }
-
+            
             // Auto-fill the price based on the service's predetermined pricing.
 
             return View(payment);
@@ -48,23 +44,30 @@ namespace MyService.Controllers
 
         // POST: Payment/ProcessPayment
         // Updates the payment record (for instance, when the user enters the amount manually)
-        
+
 
         // POST: Payment/ConfirmPayment
         // Marks the payment as confirmed by setting the makepaid flag to true.
-       
+
         // GET: Payment/pymentlist
         // Returns a list of payment records for the current user.
         public async Task<IActionResult> pymentlist()
         {
             if (!_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Customer");
             }
             var identityUser = await _userManager.GetUserAsync(User);
             if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
             {
-                return RedirectToAction("Index", "Home");
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
+
+                } 
+            
+
+            return RedirectToAction("Index", "Home");
             }
             var payments = await _context.paids
                 .Include(p => p.Request)
@@ -72,14 +75,11 @@ namespace MyService.Controllers
                 .Where(p => p.Request.UserId == identityUser.UserName)
                 .ToListAsync();
 
-            if (payments == null || !payments.Any())
-            {
-                TempData["Error"] = "_.";
-                return RedirectToAction("Index", "Home");
-            }
+
+            
 
             // Update the amount for each payment based on the predetermined price.
-            
+
 
             return View(payments);
         }

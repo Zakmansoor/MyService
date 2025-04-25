@@ -2,8 +2,8 @@
     ViewBag.Title = "الرئيسية";
     Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
 }
+<link href="~/css/style.css" rel="stylesheet">
 
-</style>
 <div dir="ltr" class="header-carousel owl-carousel">
     <div class="header-carousel-item">
         <img src="~/img/carousel-1.jpg" class="img-fluid w-100" alt="خدمات متنوعة">
@@ -154,133 +154,447 @@
 </div>
 <!-- About End -->
 <!-- Features Start -->
-<div class="container-fluid feature pb-5" id="service">
+<!-- Features End -->
+<!-- Offer Start -->
+<div class="container-fluid service pb-5">
     <div class="container pb-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
             <h4 class="text-primary">خدماتنا</h4>
-            <h1 class="display-5 mb-4">خدمات فنية شاملة للمنازل والشركات</h1>
-            <p class="mb-0">نوفر فنيين محترفين في مختلف التخصصات بما في ذلك الكهرباء والسباكة والنجارة لتلبية جميع احتياجاتك بكفاءة عالية وجودة ممتازة.</p>
+            <h1 class="display-5 mb-4">حلول هندسية متخصصة لمنزلك</h1>
+            <p class="mb-0">
+                في MyService، نقدم خدمات هندسية مبتكرة وموثوقة لحل كل تحديات إصلاح المنازل. بدءًا من التحديثات الكهربائية إلى الطلاء الدقيق والأعمال الخشبية، يكرس فريقنا جهوده لجعل منزلك آمنًا وفعالًا ومصانًا بأعلى جودة.
+            </p>
         </div>
+
         <div class="row g-4">
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-plug fa-4x text-primary"></i>
+            <!-- Electrical Service -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/elec.jpg" class="img-fluid rounded-top w-100" alt="الخدمة الكهربائية">
                     </div>
-                    <h4>فني كهرباء محترف</h4>
-                    <p class="mb-4">خدمات كهربائية متنوعة من التركيبات إلى الصيانة لضمان أمان منزلك</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">الخدمة الكهربائية</a>
+                        <p class="mb-4">
+                            يقوم كهربائيو الخبرة لدينا بتشخيص وإصلاح المشكلات الكهربائية بسرعة. يضمنون إصلاحات وتركيبات آمنة وفعالة لمنزلك.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-water fa-4x text-primary"></i>
+            <!-- Plumbing Services -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/plumbing.jpg" class="img-fluid rounded-top w-100" alt="خدمات السباكة">
                     </div>
-                    <h4>فني سباكة محترف</h4>
-                    <p class="mb-4">خدمات سباكة متكاملة تشمل الإصلاحات والتركيبات لمنع التسريبات</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">خدمات السباكة</a>
+                        <p class="mb-4">
+                            يقوم سباكونا المحترفون بإصلاح التسريبات وتنظيف المواسير بسرعة. يقدمون خدمات تركيب وصيانة موثوقة لضمان عمل أنظمة المياه بسلاسة.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-tools fa-4x text-primary"></i>
+            <!-- Painting Services -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Painting.jpg" class="img-fluid rounded-top w-100" alt="خدمات الطلاء">
                     </div>
-                    <h4>نجار محترف</h4>
-                    <p class="mb-4">خدمات نجارة مخصصة تشمل تركيب الأثاث وتصاميم داخلية فريدة</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">خدمات الطلاء</a>
+                        <p class="mb-4">
+                            يقوم رسامونا بتجديد الديكورات الداخلية والخارجية بلمسات نهائية عالية الجودة. يقومون بإعداد الأسطح بعناية لضمان الحصول على تشطيب متين وأنيق يدوم طويلاً.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-paint-brush fa-4x text-primary"></i>
+            <!-- Carpentry Services -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Carpentry.jpg" class="img-fluid rounded-top w-100" alt="خدمات النجارة">
                     </div>
-                    <h4>خدمات الدهانات</h4>
-                    <p class="mb-4">خدمات الدهان الداخلي والخارجي لمنح منزلك لمسة جمالية مميزة</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">خدمات النجارة</a>
+                        <p class="mb-4">
+                            يصنع نجارونا التركيبات الخشبية المخصصة ويصلحونها لتعزيز جمالية مساحتك، مع الدمج بين الدقة وجودة العمل في كل مشروع.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
+                </div>
+            </div>
+            <!-- HVAC Services -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/HVAC.jpg" class="img-fluid rounded-top w-100" alt="خدمات التكييف">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">خدمات التكييف</a>
+                        <p class="mb-4">
+                            يقوم فنيونا المتخصصون بتثبيت وصيانة وإصلاح أنظمة التدفئة والتبريد بكفاءة، مما يساعد على الحفاظ على راحة منزلك في جميع الفصول.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Cleaning Services -->
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Cleaning.jpg" class="img-fluid rounded-top w-100" alt="خدمات التنظيف">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">خدمات التنظيف</a>
+                        <p class="mb-4">
+                            يقدم خبراؤنا خدمات تنظيف شاملة للمنازل، حيث يتم تخصيص روتين التنظيف وفقًا لاحتياجاتك الخاصة لضمان منزل نظيف تمامًا.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Features End -->
-<!-- Offer Start -->
-<div class="container-fluid offer-section pb-5" id="Features">
+<div class="container-fluid service pb-5">
     <div class="container pb-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-primary">عروضنا</h4>
-            <h1 class="display-5 mb-4">المميزات التي نقدمها</h1>
-            <p class="mb-0">نقدم خدمات فنية متنوعة من فنيين محترفين في الكهرباء والسباكة والنجارة لتلبية احتياجاتك بكفاءة عالية</p>
+            <h4 class="text-primary">خدماتي</h4>
+            <h1 class="display-5 mb-4">حلول موثوقة لخدمات منزلك الأساسية</h1>
+            <p class="mb-0">
+                يقدم محترفونا المعتمدون الدعم الطارئ والصيانة على مدار الساعة لجميع أنظمة منزلك الحيوية. استجابة سريعة، تنفيذ عالي الجودة، وتسعير شفاف مضمون.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-lightbulb fa-4x text-primary"></i>
+                    </div>
+                    <h4>حلول مبتكرة</h4>
+                    <p class="mb-4">
+                        نحوّل أفكارك إلى استراتيجيات فعالة. يجمع أسلوبنا بين الإبداع والأساليب المجربة لتخطي العقبات....
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-users-cog fa-4x text-primary"></i>
+                    </div>
+                    <h4>الدعم الشخصي</h4>
+                    <p class="mb-4">
+                        نقدم دعمًا شخصيًا لمواجهة التحديات اليومية. يوفر فريقنا إرشادات واضحة مع حلول عملية.
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-clock fa-4x text-primary"></i>
+                    </div>
+                    <h4>متوفرون على مدار الساعة</h4>
+                    <p class="mb-4">
+                        فريقنا متوفر دائمًا للرد وتقديم الدعم والنصائح المتخصصة على مدار الساعة. بغض النظر عن الوقت، يمكنك الاعتماد علينا.
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-heartbeat fa-4x text-primary"></i>
+                    </div>
+                    <h4>الصحة والعافية</h4>
+                    <p class="mb-4">
+                        استمتع برعاية على مدار الساعة مع خدمة الصحة والعافية الخاصة بنا. نقدم النصائح المتخصصة والدعم الفوري كلما احتجت إليه....
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid offer-section pb-5">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">عرضنا</h4>
+            <h1 class="display-5 mb-4">المزايا التي نقدمها</h1>
+            <p class="mb-0">
+                استمتع بخدمات إصلاح المنازل الموثوقة والمهنية، المصممة لحل المشكلات اليومية بكفاءة. يقدم فريقنا الخبير حلولاً مخصصة للتحديات الكهربائية والسباكة والطلاء والنجارة.
+            </p>
         </div>
         <div class="row g-5 align-items-center">
+            <!-- Navigation Pills -->
             <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
                 <div class="nav nav-pills bg-light rounded p-5">
                     <a class="accordion-link p-4 active mb-4" data-bs-toggle="pill" href="#collapseOne">
-                        <h5 class="mb-0">خدمات كهربائية موثوقة</h5>
+                        <h5 class="mb-0">الإصلاحات والترقيات الكهربائية المتخصصة</h5>
                     </a>
                     <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseTwo">
-                        <h5 class="mb-0">حلول سباكة شاملة</h5>
+                        <h5 class="mb-0">حلول موثوقة للسباكة وأنظمة المياه</h5>
                     </a>
                     <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseThree">
-                        <h5 class="mb-0">خدمات نجارة مخصصة</h5>
+                        <h5 class="mb-0">الطلاء الدقيق والتشطيب والترميم</h5>
                     </a>
                     <a class="accordion-link p-4 mb-0" data-bs-toggle="pill" href="#collapseFour">
-                        <h5 class="mb-0">دهانات داخلية وخارجية</h5>
+                        <h5 class="mb-0">النجارة المخصصة والتجديد الشامل</h5>
                     </a>
                 </div>
             </div>
+            <!-- Tab Content -->
             <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.4s">
                 <div class="tab-content">
+                    <!-- Tab 1: Electrical Repairs & Upgrades -->
                     <div id="collapseOne" class="tab-pane fade show p-0 active">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-1.jpg" class="img-fluid w-100 rounded" alt="الخدمات الكهربائية">
+                                <img src="~/img/elec.jpg" class="img-fluid w-100 rounded" alt="الإصلاحات الكهربائية">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">خدمات كهربائية موثوقة</h1>
-                                <p class="mb-4">نقدم أفضل الحلول الكهربائية لجميع احتياجاتك من التركيب إلى الصيانة</p>
-                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                                <h1 class="display-5 mb-4">الإصلاحات والترقيات الكهربائية المتخصصة</h1>
+                                <p class="mb-4">
+                                    يقوم فريقنا الهندسي بتقديم إصلاحات وترقيات كهربائية آمنة وفعالة مصممة خصيصًا لتلبية احتياجات منزلك. نضمن أن تكون التوصيلات والإضاءة والدارات الكهربائية محسنة من حيث الأداء والسلامة.
+                                </p>
+                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
                             </div>
                         </div>
                     </div>
+                    <!-- Tab 2: Plumbing & Water System Solutions -->
                     <div id="collapseTwo" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-2.jpg" class="img-fluid w-100 rounded" alt="خدمات السباكة">
+                                <img src="~/img/plumbing.jpg" class="img-fluid w-100 rounded" alt="حلول السباكة">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">حلول سباكة شاملة</h1>
-                                <p class="mb-4">فريق السباكين المحترفين لدينا يقدم حلول سريعة وفعالة لجميع مشاكل السباكة</p>
-                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                                <h1 class="display-5 mb-4">حلول موثوقة للسباكة وأنظمة المياه</h1>
+                                <p class="mb-4">
+                                    يقوم السباكون المعتمدون لدينا بمعالجة التسريبات والانسدادات وإصلاح أنظمة المياه بدقة. نقدم حلولاً سريعة وفعالة لضمان عمل سباكة منزلك بسلاسة.
+                                </p>
+                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
                             </div>
                         </div>
                     </div>
+                    <!-- Tab 3: Painting, Finishing & Restoration -->
                     <div id="collapseThree" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-3.jpg" class="img-fluid w-100 rounded" alt="خدمات النجارة">
+                                <img src="~/img/Painting.jpg" class="img-fluid w-100 rounded" alt="خدمات الطلاء">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">خدمات نجارة مخصصة</h1>
-                                <p class="mb-4">نقدم خدمات نجارة مخصصة من تركيب الأثاث إلى تصاميم داخلية فريدة</p>
-                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                                <h1 class="display-5 mb-4">الطلاء الدقيق والتشطيب والترميم</h1>
+                                <p class="mb-4">
+                                    تقدم خدمات الطلاء لدينا تشطيبات عالية الجودة تُحسّن وتحمي أسطح منزلك. نركز على الإعداد الشامل والتطبيق الخبيري للحصول على نتيجة نابضة بالحياة وطويلة الأمد.
+                                </p>
+                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
                             </div>
                         </div>
                     </div>
+                    <!-- Tab 4: Custom Carpentry & Comprehensive Renovation -->
                     <div id="collapseFour" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-4.jpg" class="img-fluid w-100 rounded" alt="خدمات الدهان">
+                                <img src="~/img/Carpentry.jpg" class="img-fluid w-100 rounded" alt="خدمات النجارة">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">دهانات داخلية وخارجية</h1>
-                                <p class="mb-4">جدد منزلك مع خدمات الدهان الاحترافية للحصول على لمسة جمالية متميزة</p>
-                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">المزيد</a>
+                                <h1 class="display-5 mb-4">النجارة المخصصة والتجديد الشامل</h1>
+                                <p class="mb-4">
+                                    تقدم حلول النجارة والتجديد لدينا تصاميم مخصصة وحرفية عالية لتحويل منزلك. نوفر إنشاءات مبتكرة ومتينة مصممة لتلبية احتياجاتك الفريدة.
+                                </p>
+                                <a class="btn btn-primary rounded-pill py-2 px-4" href="#">اعرف المزيد</a>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid blog pb-5"
+dir="ltr">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">رؤى إصلاح المنازل</h4>
+            <h1 class="display-5 mb-4">مقالات متخصصة حول الحلول الهندسية</h1>
+            <p class="mb-0">
+                اكتشف النصائح الاحترافية، والحلول المبتكرة، والإرشادات العملية من فريقنا الهندسي ذو الخبرة لحل مشاكل المنازل الشائعة.
+            </p>
+        </div>
+        <div class="owl-carousel blog-carousel wow fadeInUp" data-wow-delay="0.2s">
+            <!-- Blog Item 1 -->
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Electrical Services.jpg" class="img-fluid w-100 rounded" alt="الإصلاحات الكهربائية">
+                    <div class="blog-title">
+                        <a href="#" class="btn">إصلاحات كهربائية</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">كيفية ترقية النظام الكهربائي في منزلك</a>
+                <p class="mb-4">
+                    استكشف دليلنا الشامل لحلول إصلاح المنازل. اكتشف نصائح خطوة بخطوة، وإرشادات عملية، ورؤى هندسية موثوقة لضمان بقاء منزلك آمنًا ومريحًا.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Electrical Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="إصلاحات كهربائية">
+                    <div class="ms-3">
+                        <p class="mb-0">9 أبريل 2025</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Item 2 -->
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Plumbing Services.jpg" class="img-fluid w-100 rounded" alt="حلول السباكة">
+                    <div class="blog-title">
+                        <a href="#" class="btn">حلول السباكة</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">الوقاية من المشاكل  الشائعة في المنزل</a>
+                <p class="mb-4">
+                    استكشف دليلنا الشامل لحلول إصلاح المنازل. اكتشف نصائح خطوة بخطوة، وإرشادات عملية، ورؤى هندسية موثوقة لضمان بقاء منزلك آمنًا ومريحًا.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Plumbing Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="حلول السباكة">
+                    <div class="ms-3">
+                        <p class="mb-0 ml-1">9 أبريل 2025</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Item 3 -->
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Painting Services.jpg" class="img-fluid w-100 rounded" alt="خدمات الطلاء">
+                    <div class="blog-title">
+                        <a href="#" class="btn">الطلاء والتجديد</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">حوّل منزلك بنصائح الطلاء المتخصصة</a>
+                <p class="mb-4">
+                    استكشف دليلنا الشامل لحلول إصلاح المنازل. اكتشف نصائح خطوة بخطوة، وإرشادات عملية، ورؤى هندسية موثوقة لضمان بقاء منزلك آمنًا ومريحًا.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Painting Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="خدمات الطلاء">
+                    <div class="ms-3">
+                        <p class="mb-0">9 أبريل 2025</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Blog Item 4 -->
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Carpentry Services.jpg" class="img-fluid w-100 rounded" alt="خدمات النجارة">
+                    <div class="blog-title">
+                        <a href="#" class="btn">النجارة والتجديد</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">أفكار لأعمال النجارة  وتجديد المنازل</a>
+                <p class="mb-4">
+                    استكشف دليلنا الشامل لحلول إصلاح المنازل. اكتشف نصائح خطوة بخطوة، وإرشادات عملية، ورؤى هندسية موثوقة لضمان بقاء منزلك آمنًا ومريحًا.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Carpentry Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="خدمات النجارة">
+                    <div class="ms-3">
+                        <p class="mb-0">9 أبريل 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid faq-section pb-5">
+    <div class="container pb-5 overflow-hidden">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">الأسئلة الشائعة</h4>
+            <h1 class="display-5 mb-4">الأسئلة المتكررة</h1>
+            <p class="mb-0">
+                تقدم خدمتنا حلول إصلاح منازل موثوقة، بما في ذلك الطلاء الاحترافي والإصلاحات الكهربائية. استعرض قسم الأسئلة الشائعة لدينا لتتعرف على كيفية تحديد المواعيد، وفهم عمليتنا، والحصول على المساعدة المتخصصة في تحويل منزلك.
+            </p>
+        </div>
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                <div class="accordion accordion-flush bg-light rounded p-5" id="accordionFlushSection">
+                    <div class="accordion-item rounded-top">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                كيف تعمل خدمات الهندسة الخاصة بكم؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                تقوم خدمتنا الهندسية بتقييم احتياجات إصلاح منزلك من خلال فحص دقيق وحلول مخصصة. نقدم استشارات متخصصة لإصلاح المشكلات التي تتراوح من الطلاء إلى الإصلاحات الكهربائية.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                ما هو زمن الاستجابة لخدمات الإصلاح لديكم؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                يختلف زمن الاستجابة حسب تعقيد المشروع. يوفر فريقنا جدولاً زمنياً واضحاً خلال الاستشارة الأولية ويسعى لإكمال الإصلاحات بسرعة.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                هل خدمات الإصلاح الخاصة بكم آمنة وموثوقة؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                نعم، يلتزم فريقنا بأعلى معايير السلامة ومراقبة الجودة. نضمن إتمام كل إصلاح – سواء كان كهربائياً أو بالطلاء – بأعلى مستوى من الموثوقية والحرفية.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                كيف تتعاملون مع تحديات الإصلاح غير المتوقعة؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                يتم تجهيز مهندسينا للتعامل مع أي مشكلات غير متوقعة تنشأ أثناء الإصلاحات. نقوم بتقييم التحديات بسرعة ونعدل استراتيجياتنا لتقديم حلول فعالة وطويلة الأمد.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                ما أنواع إصلاحات المنازل التي تقدمونها؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                نقدم مجموعة واسعة من خدمات إصلاح المنازل، بما في ذلك الإصلاحات الكهربائية، والطلاء الاحترافي، والسباكة، والنجارة، وغيرها. يتم تخصيص كل مشروع لتلبية الاحتياجات الفريدة لمنزلك.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item rounded-bottom">
+                        <h2 class="accordion-header" id="flush-headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                كيف يمكنني تحديد موعد للإصلاح؟
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                تحديد موعد للإصلاح أمر بسيط. يمكنك التواصل معنا عبر موقعنا الإلكتروني أو الاتصال بخط الخدمة الخاص بنا، وسينسق فريقنا موعداً مناسباً للاستشارة الأولية وتقييم الإصلاح.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                <div class="bg-primary rounded">
+                    <img src="~/img/about-2.png" class="img-fluid w-100" alt="">
                 </div>
             </div>
         </div>
@@ -289,58 +603,105 @@
 <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
     <div class="container py-5 border-start-0 border-end-0" style="border: 1px solid; border-color: rgba(255, 255, 255, 0.08);">
         <div class="row g-5">
+            <!-- العلامة التجارية وروابط التنزيل -->
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item">
                     <a href="index.html" class="p-0">
-                        <h4 class="text-white"><i class="fas fa-tools me-3"></i>فنيون محترفون</h4>
+                        <h4 class="text-white"><i class="fas fa-tools me-3"></i>خدماتي</h4>
                     </a>
-                    <p class="mb-4">نقدم خدمات فنية متنوعة تشمل الكهرباء والسباكة والنجارة. اتصل بنا للحصول على حلول مثالية.</p>
+                    <p class="mb-4">
+                        نقدم حلولاً هندسية مبتكرة لإصلاح الأعطال المنزلية وتعزيز مساحة معيشتك. وثق بخبرائنا للحصول على خدمة عالية الجودة ونتائج تدوم طويلاً.
+                    </p>
                     <div class="d-flex">
                         <a href="#" class="bg-primary d-flex rounded align-items-center py-2 px-3 me-2">
                             <i class="fas fa-apple-alt text-white"></i>
                             <div class="ms-3">
-                                <small class="text-white">تنزيل من</small>
-                                <h6 class="text-white">متجر التطبيقات</h6>
+                                <small class="text-white">تنزيل على</small>
+                                <h6 class="text-white">App Store</h6>
+                            </div>
+                        </a>
+                        <a href="#" class="bg-dark d-flex rounded align-items-center py-2 px-3 ms-2">
+                            <i class="fas fa-play text-primary"></i>
+                            <div class="ms-3">
+                                <small class="text-white">تنزيل على</small>
+                                <h6 class="text-white">Google Play</h6>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-6 col-lg-6 col-xl-3" id="contact">
+            <!-- روابط سريعة -->
+            <div class="col-md-6 col-lg-6 col-xl-2">
+                <div class="footer-item">
+                    <h4 class="text-white mb-4">روابط سريعة</h4>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>الرئيسية</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>من نحن</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>الخدمات</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>المشاريع</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>المدونة</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>اتصل بنا</a>
+                </div>
+            </div>
+            <!-- الدعم -->
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <div class="footer-item">
+                    <h4 class="text-white mb-4">الدعم</h4>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>سياسة الخصوصية</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>الشروط والأحكام</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>الأسئلة الشائعة</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>المساعدة</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>خدمة العملاء</a>
+                </div>
+            </div>
+            <!-- معلومات الاتصال -->
+            <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-item">
                     <h4 class="text-white mb-4">معلومات الاتصال</h4>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-map-marker-alt text-primary me-3"></i>
-                        <p class="text-white mb-0">123 23، عسير، السعودية</p>
+                        <p class="text-white mb-0">456 شارع مكة، عسير، السعودية</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-envelope text-primary me-3"></i>
-                        <p class="text-white mb-0">info.sa@service.com</p>
+                        <p class="text-white mb-0">support@myservice.com</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="fa fa-phone-alt text-primary me-3"></i>
-                        <p class="text-white mb-0">+96656067890</p>
+                        <p class="text-white mb-0">(+996) 5556 7890</p>
+                    </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fab fa-firefox-browser text-primary me-3"></i>
+                        <p class="text-white mb-0">www.myservice.com</p>
+                    </div>
+                    <div class="d-flex">
+                        <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                        <a class="btn btn-primary btn-sm-square rounded-circle me-0" href="#">
+                            <i class="fab fa-linkedin-in text-white"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-            
-            <div class="d-flex justify-content-start">
-                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f text-white"></i></a>
-                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#"><i class="fab fa-twitter text-white"></i></a>
-                <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#"><i class="fab fa-instagram text-white"></i></a>
-                <a class="btn btn-primary btn-sm-square rounded-circle me-0" href="#"><i class="fab fa-linkedin-in text-white"></i></a>
             </div>
         </div>
     </div>
 </div>
-@section Scripts {
+<div class="container-fluid copyright py-4">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-md-0">
+                <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>خدماتي</a>، جميع الحقوق محفوظة.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end text-body">
+                تصميم بواسطة <a class="border-bottom text-white" href="https://htmlcodex.com">CMS</a> وتوزيع بواسطة <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-    <!-- كود إضافي لإيقاف الفيديو عند الإغلاق (اختياري) -->
-    <script>
-        document.getElementById('videoModal').addEventListener('hidden.bs.modal', function () {
-            this.querySelector('iframe').src = '';
-        });
-    </script>
-}

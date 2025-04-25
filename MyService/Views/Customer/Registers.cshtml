@@ -4,11 +4,11 @@
 }
 
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Register</title>
+    <title>تسجيل مستخدم جديد</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
@@ -18,25 +18,55 @@
     <link rel="stylesheet" href="~/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
+    <!-- Arabic Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
 <style>
-    .text-danger {
-    margin-top: 5px;
-    font-size: 0.9rem; /* تعديل حجم الخط */
+    body {
+        font-family: 'Tajawal', sans-serif;
     }
 
+    .text-danger {
+        margin-top: 5px;
+        font-size: 0.9rem;
+    }
+
+    .register-page {
+        background: #e9ecef;
+    }
+
+    .register-logo a {
+        color: #007bff;
+        font-weight: 700;
+    }
+
+    .register-card-body {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .input-group-text {
+        border-left: 0;
+        border-right: 1px solid #ced4da;
+    }
+
+    .custom-file-label::after {
+        left: 0;
+        right: auto;
+        content: "استعراض";
+    }
 </style>
+</head>
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="#"><b>Register</b>LTE</a>
+            <a href="#">تسجيل <b>مستخدم جديد</b></a>
         </div>
 
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Register a new membership</p>
+                <p class="login-box-msg">إنشاء حساب جديد</p>
 
                 <form asp-action="Registers" method="post" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
@@ -44,56 +74,44 @@
 
                     <!-- قسم معلومات المستخدم -->
                     <div class="input-group mb-3">
-                        <input asp-for="RegisterCustomer.Name" class="form-control" placeholder="Full name">
+                        <input asp-for="RegisterCustomer.Name" class="form-control" placeholder="الاسم الكامل">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="RegisterCustomer.Name" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="RegisterCustomer.Name" class="text-danger d-block"></span>
 
                     <div class="input-group mb-3">
-                        <input asp-for="RegisterCustomer.Email" class="form-control" placeholder="Email">
+                        <input asp-for="RegisterCustomer.Email" class="form-control" placeholder="البريد الإلكتروني">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="RegisterCustomer.Email" class="text-danger"></span>
                     </div>
-
-                    <!-- قسم كلمة المرور -->
+                    <span asp-validation-for="RegisterCustomer.Email" class="text-danger d-block"></span>
+                    
                     <div class="input-group mb-3">
-                        <input type="password" asp-for="RegisterCustomer.Password" class="form-control" placeholder="Password">
+                        <input type="password" asp-for="RegisterCustomer.Password" class="form-control" placeholder="كلمة المرور">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="RegisterCustomer.Password" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="RegisterCustomer.Password" class="text-danger d-block"></span>
 
                     <div class="input-group mb-3">
-                        <input type="password" asp-for="RegisterCustomer.ComparePassword" class="form-control" placeholder="Confirm password">
+                        <input type="password" asp-for="RegisterCustomer.ComparePassword" class="form-control" placeholder="تأكيد كلمة المرور">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
-                        <span asp-validation-for="RegisterCustomer.ComparePassword" class="text-danger"></span>
                     </div>
-
-                    <!-- Toggle Active User -->
-                    <div class="form-group" style="display: none;">
-                        <div class="icheck-primary">
-                            <!-- استخدم معرف مختلف مثل activeUser -->
-                            <input asp-for="RegisterCustomer.ActiveUser" type="checkbox" id="activeUser">
-                            <label for="activeUser">
-                                Active User
-                            </label>
-                        </div>
-                    </div>
+                    <span asp-validation-for="RegisterCustomer.ComparePassword" class="text-danger d-block"></span>
 
                     <!-- رفع الصورة -->
                     <div class="form-group">
@@ -101,82 +119,43 @@
                             <div class="custom-file">
                                 <input asp-for="RegisterCustomer.Image" type="file" class="custom-file-input" id="imageFile">
                                 <span asp-validation-for="RegisterCustomer.Image" class="text-danger"></span>
-
-                                <label class="custom-file-label" for="imageFile">Choose image</label>
+                                <label class="custom-file-label" for="imageFile">اختر صورة</label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- شروط الاستخدام -->
+                    <!-- زر التسجيل -->
                     <div class="row">
-                        <div class="col-8" style="display: none;">
-                            <div class="icheck-primary">
-                                <!-- استخدم معرف مختلف هنا مثل agreeTerms -->
-                                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                <label for="agreeTerms">
-                                    I agree to the <a href="#">terms</a>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">تسجيل الحساب</button>
                         </div>
                     </div>
                 </form>
 
-                
-
-                <a asp-action="Login" class="text-center">I already have a membership</a>
+                <div class="mt-3 text-center">
+                    <a asp-action="Login" class="text-center">لديك حساب بالفعل؟ سجل الدخول هنا</a>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Scripts Section -->
     @section Scripts {
-        <!-- مثال لتنبيه باستخدام Swal إذا كانت الرسائل موجودة في الـ Session -->
-        @if (!string.IsNullOrEmpty(Context.Session.GetString(Helper.MsgType)))
-        {
-            if (Context.Session.GetString(Helper.MsgType) == Helper.Success)
-            {
-                <script>
-                    Swal.fire({
-                        title: '@Context.Session.GetString(Helper.Title)',
-                        text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
-                        confirmButtonText: '@ResourceWeb.lbOk',
-                        icon: 'success'
-                    });
-                </script>
-            }
-            else
-            {
-                <script>
-                    Swal.fire({
-                        title: '@Context.Session.GetString(Helper.Title)',
-                        text: '@Html.Raw(@Context.Session.GetString(Helper.Msg))',
-                        confirmButtonText: '@ResourceWeb.lbOk',
-                        icon: 'error'
-                    });
-                </script>
-            }
-            Context.Session.SetString(Helper.MsgType, "");
-        }
-        <!-- تضمين سكريبتات التحقق -->
+        <!-- Include validation scripts -->
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/Admin/dist/js/adminlte.min.js"></script>
+        <!-- File Input Translation -->
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // مثال لضبط حالة checkbox ActiveUser عند تحميل الصفحة
-                var activeCheckbox = document.getElementById("activeUser");
-                // لتعيين الحالة الافتراضية (true يعني مفعل)
-                activeCheckbox.checked = true;
+            document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+                var fileName = document.getElementById("imageFile").files[0].name;
+                var nextSibling = e.target.nextElementSibling;
+                nextSibling.innerText = fileName;
             });
         </script>
     }
-
-    <!-- jQuery -->
-    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Admin/dist/js/adminlte.min.js"></script>
 </body>
 </html>

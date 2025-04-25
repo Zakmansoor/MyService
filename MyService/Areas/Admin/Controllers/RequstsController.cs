@@ -66,7 +66,8 @@ namespace MyService.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
+                // Log the exception (e.g., using a logging framework)
+                Console.WriteLine($"An error occurred: {ex.Message}");
                 return StatusCode(500, "An error occurred");
             }
         }

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Localization;
 using System;
+using System.Globalization;
 
 
 namespace MyService.Controllers
@@ -26,6 +27,12 @@ namespace MyService.Controllers
 
         public IActionResult Index()
         {
+            if(CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                return RedirectToAction("Indexar", "Home");
+
+            }
+
             return View();
         }public IActionResult Indexar()
         {

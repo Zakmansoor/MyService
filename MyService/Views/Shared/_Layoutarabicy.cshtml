@@ -4,8 +4,8 @@
 @using Infarstuructre.Data
 @using Infarstuructre.ViewModel;
 @using Microsoft.EntityFrameworkCore
+@using System.Globalization
 @{
-    // جلب المستخدم الحالي
     ApplicationUser currentUser = null;
     bool showUserInfo = false; // تعيين القيمة الافتراضية
     if (signInManager.IsSignedIn(User))
@@ -36,264 +36,202 @@
 }
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title class="brand-text mb-0">الخدمات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <title>Stocker - Stock Market Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- مكتبات CSS -->
-    <link rel="stylesheet" href="~/lib/animate/animate.min.css" />
-    <link href="~/lib/lightbox/css/lightbox.min.ccs" rel="stylesheet">
+    <link href="~/lib/animate/animate.min.css" rel="stylesheet" />
+    <!-- ~/libraries Stylesheet -->
+    <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- ملف CSS مخصص لـ Bootstrap -->
+
+    <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- ملف CSS للقالب -->
+    <!-- Template Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
-
-    <style>
-        h1, h2, h3, h4 {
-            font-family: 'Amiri', serif; /* استبدل 'Amiri' باسم الخط المناسب للعربية */
-        }
-
-        body {
-            font-family: 'Amiri', serif; /* تطبيق الخط على كامل الصفحة */
-            margin: 0;
-            padding: 0;
-            background-color: #f8f9fa; /* لون خلفية خفيف */
-            color: #212529; /* لون النص */
-        }
-
-        .navbar {
-            background-color: #ffffff; /* لون خلفية شريط التنقل */
-        }
-
-        .navbar-brand, .nav-link {
-            color: #007bff; /* لون النص لرابط الشريط */
-        }
-
-        .rounded-circle {
-            border-radius: 50% !important;
-        }
-
-        .user-info {
-            line-height: 1.2;
-        }
-
-        .btn-link {
-            transition: all 0.3s ease;
-        }
-
-            .btn-link:hover {
-                opacity: 0.8;
-            }
-        /* تنسيق قسم المستخدم */
-        .user-dropdown {
-            transition: all 0.3s ease;
-        }
-
-            .user-dropdown:hover {
-                background-color: #f8f9fa;
-            }
-
-        .user-img {
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            border: 2px solid #007bff;
-        }
-
-        .nav-icon {
-            font-size: 1.2rem;
-            vertical-align: middle;
-        }
-
-        .auth-links .btn {
-            font-size: 0.9rem;
-            padding: 0.25rem 0.5rem;
-        }
-
-            .auth-links .btn:hover {
-                transform: translateY(-1px);
-            }
-    </style>
 </head>
 
 <body>
-    <!-- تحميل الصفحة -->
+
+    <!-- Spinner Start -->
+    <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">جارٍ التحميل...</span>
+            <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <!-- نهاية التحميل -->
-    <!-- شريط المعلومات العلوي -->
+    <!-- Spinner End -->
+    <!-- Topbar Start -->
+    <!-- Topbar Start -->
     <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
         <div class="row gx-0 align-items-center">
-            <!-- بداية الشريط العلوي -->
-            <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
-                <div class="row gx-0 align-items-center">
-                    <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                        <!-- تبقى معلومات الاتصال كما هي -->
-                    </div>
-
+            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="tel:+01234567890" class="text-muted small me-4">
+                        <i class="fas fa-phone-alt text-primary me-2"></i>+05234567890
+                    </a>
+                    <a href="mailto:myserviceksa@gmail.com" class="text-muted small me-0">
+                        <i class="fas fa-envelope text-primary me-2"></i>myserviceksa@gmail.com
+                    </a>
+                </div>
+            </div>
+           
                     <div class="col-lg-4 text-center text-lg-end">
-                        @if (signInManager.IsSignedIn(User) && currentUser != null)
+                        <div class="d-flex align-items-center justify-content-end">
+                    @if (signInManager.IsSignedIn(User) && currentUser != null)
+                    {
+                        @if (showUserInfo)
                         {
-                            @if (showUserInfo)
-                            {
-                                <div class="d-flex align-items-center justify-content-end">
-                                    <div class="me-3">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-dark" data-bs-toggle="dropdown">
+                                    <small>
                                         <img src="@Helper.PathImageuser@currentUser.ImageUser"
                                              class="rounded-circle"
                                              alt="صورة المستخدم"
                                              style="width: 40px; height: 40px; object-fit: cover;">
-                                    </div>
-                                    <div class="dropdown">
-                                        <a href="#" class="text-dark fw-bold text-decoration-none dropdown-toggle"
-                                           id="userDropdown" data-bs-toggle="dropdown">
-                                            @currentUser.Name
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <form asp-action="Logout" asp-controller="Customer" method="post">
-                                                    <button type="submit" class="dropdown-item text-danger">
-                                                        تسجيل الخروج
-                                                    </button>
-                                                </form>
-                                            </li>
-                                            <li>
-                                                <a href="@Url.Action("UpdateProfile", "Customer", new { id = currentUser.Id })"
-                                                   class="dropdown-item text-danger">
-                                                    تعديل الملف الشخصي
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    </small>
+                                    @currentUser.Name
+                                </a>
+                                <div class="dropdown-menu rounded">
+                                    <a href="@Url.Action("UpdateProfile", "Customer", new { id = currentUser.Id })" class="dropdown-item">
+                                        <i class="fas fa-cog me-2"></i>إعدادات الحساب
+                                    </a>
+                                    <form asp-action="Logout" asp-controller="Customer" method="post">
+                                        <button type="submit"class="dropdown-item">
+                                            <i class="fas fa-power-off me-2"></i>تسجيل الخروج
+                                        </button>
+                                    </form>
                                 </div>
+                            </div>
                             }
                             else
                             {
-                                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                                    <a href="/Customer/Registers" class="btn btn-link text-dark text-decoration-none me-3">
-                                        <i class="fa fa-user-plus me-2"></i>تسجيل حساب
-                                    </a>
-                                    <a href="/Customer/Login" class="btn btn-link text-dark text-decoration-none">
-                                        <i class="fa fa-sign-in-alt me-2"></i>تسجيل الدخول
-                                    </a>
-                                </div>
+                            <a href="/Customer/Registers">
+                                <small class="me-3 text-dark">
+                                    <i class="fa fa-user text-primary me-2"></i>تسجيل جديد
+                                </small>
+                            </a>
+                            <a href="/Customer/Login">
+                                <small class="me-3 text-dark">
+                                    <i class="fa fa-sign-in-alt text-primary me-2"></i>تسجيل الدخول
+                                </small>
+                            </a>
                             }
-                        }
-                        else
-                        {
-                            <div class="d-inline-flex align-items-center" style="height: 45px;">
-                                <a href="/Customer/Registers" class="btn btn-link text-dark text-decoration-none me-3">
-                                    <i class="fa fa-user-plus me-2"></i>تسجيل حساب
-                                </a>
-                                <a href="/Customer/Login" class="btn btn-link text-dark text-decoration-none">
-                                    <i class="fa fa-sign-in-alt me-2"></i>تسجيل الدخول
-                                </a>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-            <!-- نهاية الشريط العلوي -->
-            <!-- بداية شريط التنقل والواجهة الرئيسية -->
-            <div class="container-fluid position-relative p-0">
-                <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                    <a href="" class="navbar-brand p-0">
-                        <h1 class="text-primary"><i class="fas fa-search-dollar me-3"></i>خدماتي</h1>
-                    </a>
-                    <a asp-action="pymentlist" asp-controller="Payment" class="nav-item nav-link position-relative me-3">
-                        <i class="fas fa-shopping-cart fa-lg"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                            @if (showUserInfo)
+                            }
+                            else
                             {
-                                @pay.Count()
+                            <a href="/Customer/Registers">
+                                <small class="me-3 text-dark">
+                                    <i class="fa fa-user text-primary me-2"></i>تسجيل جديد
+                                </small>
+                            </a>
+                            <a href="/Customer/Login">
+                                <small class="me-3 text-dark">
+                                    <i class="fa fa-sign-in-alt text-primary me-2"></i>تسجيل الدخول
+                                </small>
+                            </a>
                             }
-                            <span class="visually-hidden">رسائل غير مقروءة</span>
-                        </span>
-                    </a>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav ms-auto py-0">
-                            <a asp-action="Index" asp-controller="Home" class="nav-item nav-link active">الرئيسية</a>
-                            <a href="#about" class="nav-item nav-link">حول</a>
-                            <a href="#service" class="nav-item nav-link">الخدمات</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link" data-bs-toggle="dropdown">
-                                    <span class="dropdown-toggle">صفحات</span>
-                                </a>
-                                <div class="dropdown-menu m-0">
-                                    <a href="#Features" class="dropdown-item">مميزاتنا</a>
-                                    <a asp-controller="Note" asp-action="Create" class="dropdown-item">أرسل ملاحظة</a>
-                                    <a asp-action="Index" asp-controller="Notifaction" class="dropdown-item">
-                                        الرسائل <span class="badge bg-warning navbar-badge">
-                                            @if (showUserInfo)
-                                            {
-                                                @notifactionlist.Count()
-                                            }
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                            <a href="#contact" class="nav-item nav-link">تواصل معنا</a>
                         </div>
-                        <a asp-action="SendRequest" asp-controller="Request"
-                           class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">
-                            ابدأ الآن
-                        </a>
                     </div>
-                    <div class="ms-3">
-                    <form id="cultureForm" asp-controller="Home" asp-action="SetLanguage" method="post">
-                        <select class="form-select form-select-sm"
-                                name="culture"
-                                onchange="document.getElementById('cultureForm').submit()"
-                                aria-label="Language Selector">
-                            <option value="ar-SA">Arabic</option>
-                            <option value="en-US">English</option>
-
-                        </select>
-                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
-                    </form>
-                    </div>
-                </nav>
-                <div class="content-header">
-                    <div class="container">
-                        @RenderBody()
-                    </div>
-                </div>
-            </div>
+                
         </div>
+    </div>
+    <!-- Topbar End -->
+    <!-- Topbar End -->
+    <!-- Navbar & Hero Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="" class="navbar-brand p-0">
+                <h1 class="text-primary"><i class="fas fa-search-dollar me-3"></i>خدماتي</h1>
+                <!-- <img src="img/logo.png" alt="Logo"> -->
+            </a>
+            <a asp-action="pymentlist" asp-controller="Payment" class="nav-item nav-link position-relative me-3">
+                <i class="fas fa-shopping-cart fa-lg"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                    @if (showUserInfo)
+                    {
+                        @pay.Count()
+                    }
+                    <span class="visually-hidden">رسائل غير مقروءة</span>
+                </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link active">الرئيسية</a>
+                    <a href="about.html" class="nav-item nav-link">من نحن</a>
+                    <a href="service.html" class="nav-item nav-link">الخدمات</a>
+                    <a href="blog.html" class="nav-item nav-link">المدونة</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link" data-bs-toggle="dropdown">
+                            <span class="dropdown-toggle">الصفحات</span>
+                        </a>
+                        <div class="dropdown-menu m-0">
+                            <a href="#" class="dropdown-item">مميزاتنا</a>
+                            <a asp-controller="Note" asp-action="Create" class="dropdown-item">ملاحظات</a>
+                            <a asp-action="Index" asp-controller="Notifaction" class="dropdown-item">
+                                <span class="badge bg-warning navbar-badge">
+                                    الرسائل
+                                    @if (showUserInfo)
+                                    {
+                                        @notifactionlist.Count()
+                                    }
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">اتصل بنا</a>
+                </div>
+                <a asp-action="SendRequest" asp-controller="Request" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0">ابدأ الآن</a>
+            </div>
+            <div class="ms-3">
+                <form id="cultureForm" class="ms-2" asp-controller="Home" asp-action="SetLanguage" method="post">
+                    <select class="form-select form-select-sm" name="culture" onchange="this.form.submit()">
+                        <option value="en-US" selected="@(CultureInfo.CurrentCulture.Name.StartsWith("en"))">الإنجليزية</option>
+                        <option value="ar-SA" selected="@(CultureInfo.CurrentCulture.Name.StartsWith("ar"))">العربية</option>
+                    </select>
+                    <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                </form>
+            </div>
+        </nav>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/lib/wow/wow.min.js"></script>
-        <script src="~/lib/easing/easing.min.js"></script>
-        <script src="~/lib/waypoints/waypoints.min.js"></script>
-        <script src="~/lib/counterup/counterup.min.js"></script>
-        <script src="~/lib/lightbox/js/lightbox.min.js"></script>
-        <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-        <!-- جافاسكربت القالب -->
-        <script src="~/js/main.js"></script>
-        @await RenderSectionAsync("Scripts", required: false);
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <!-- Carousel Start -->
+        <!-- Carousel End -->
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <!-- JavaScript ~/libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/wow/wow.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/waypoints/waypoints.min.js"></script>
+    <script src="~/lib/counterup/counterup.min.js"></script>
+    <script src="~/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false);
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
+
+<!-- Template Javascript -->
+<script src="~/js/main.js"></script>
+
 </html>

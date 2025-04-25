@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Domin.Entity;
 using Infarstuructre.Data;
@@ -106,12 +107,23 @@ namespace MyService.Controllers
 
             if (!_signInManager.IsSignedIn(User))
             {
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
+
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             if(await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
             {
-                return RedirectToAction("Index", "Home");
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
 
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
             var notifications = await _context.notifications
@@ -121,6 +133,12 @@ namespace MyService.Controllers
 
             if (notifications == null || !notifications.Any())
             {
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
+
+                }
+
                 return RedirectToAction("Index", "Home");
             }
 

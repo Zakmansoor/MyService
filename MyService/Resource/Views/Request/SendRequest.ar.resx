@@ -135,4 +135,13 @@
   <data name="Cancel" xml:space="preserve">
     <value>الغاء</value>
   </data>
+  <data name="Add Request" xml:space="preserve">
+    <value>اضافة طلب</value>
+  </data>
+  <data name="Select Map" xml:space="preserve">
+    <value>اختار موقعك</value>
+  </data>
+  <data name="Current Location" xml:space="preserve">
+    <value>موقعك الحالي</value>
+  </data>
 </root>

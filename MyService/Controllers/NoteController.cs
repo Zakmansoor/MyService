@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading.Tasks;
 using Domin.Entity;
 using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace MyService.Controllers
 {
@@ -35,7 +38,7 @@ namespace MyService.Controllers
 
             if (!_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Customer");
             }
             if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
             {
@@ -51,7 +54,7 @@ namespace MyService.Controllers
         {
             if (!_signInManager.IsSignedIn(User))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Customer");
             }
 
             if (ModelState.IsValid)
@@ -59,7 +62,14 @@ namespace MyService.Controllers
                 _context.notes.Add(model);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Note created successfully.";
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
+
+                }
+
                 return RedirectToAction("Index", "Home");
+
             }
             return View(model);
         }

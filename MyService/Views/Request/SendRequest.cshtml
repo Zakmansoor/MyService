@@ -12,6 +12,11 @@
     {
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
+    else
+    {
+        Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
+
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +72,7 @@
             <div class="col-md-8">
                 <div class="card shadow-sm mt-4">
                     <div class="card-header bg-primary text-white">
-                        <h2 class="card-title mb-0">Send Service Request</h2>
+                        <h2 class="card-title mb-0">@localizer["Add Request"]</h2>
                     </div>
                     <div class="card-body">
                         <form asp-action="SendRequest" method="post">
@@ -75,9 +80,9 @@
 
                             <!-- Map Section -->
                             <div class="form-group">
-                                <label class="form-label fw-bold">Select Location on Map</label>
+                                <label class="form-label fw-bold">@localizer["Select Loction "]</label>
                                 <button type="button" class="locate-btn" title="Use my current location">
-                                    <i class="bi bi-geo-alt"></i> Current Location
+                                    <i class="bi bi-geo-alt"></i> @localizer["Current Location"]
                                 </button>
                                 <div id="map"></div>
                                 <small class="form-text text-muted">Click on the map or use the button above to select location</small>

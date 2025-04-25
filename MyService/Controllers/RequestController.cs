@@ -8,6 +8,7 @@ using Infarstuructre.Data;
 using Infarstuructre.ViewModel;
 using MyService.Resource;
 using Microsoft.AspNetCore.Identity;
+using System.Globalization;
 
 namespace MyService.Controllers
 {
@@ -40,6 +41,12 @@ namespace MyService.Controllers
             {
                 if (await _userManager.IsInRoleAsync(identityUser, Helper.Roles.SuperAdmin.ToString()))
                 {
+                    if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                    {
+                        return RedirectToAction("Indexar", "Home");
+
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -107,11 +114,18 @@ namespace MyService.Controllers
 
                 // You can add notification creation logic here if required.
 
+                if (CultureInfo.CurrentCulture.Name.StartsWith("ar"))
+                {
+                    return RedirectToAction("Indexar", "Home");
+
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             else
             {
                 await PopulateDropdownsAsync(viewModel);
+
                 return View(viewModel);
             }
         }

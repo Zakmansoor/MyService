@@ -10,6 +10,11 @@
 
     }
 }
+<style>
+    .absolute{
+       margin-top:9%;
+    }
+</style>
 <div class="wrapper">
     <!-- Flash Messages -->
     @if (TempData["Success"] != null)
@@ -21,17 +26,12 @@
         <div class="alert alert-danger">@TempData["Error"]</div>
     }
 
+    <div class="wrapper absolute">
+
+
     <!-- Header & Breadcrumb -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"></h1>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+    <!-- Main Content Section -->
+
 
     <!-- Main Content Section -->
     <section class="content">
@@ -70,6 +70,7 @@
             </div>
         </div>
     </section>
+</div>
 </div>
 
 @section Scripts {

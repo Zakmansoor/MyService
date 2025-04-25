@@ -2,50 +2,26 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <link href="~/css/style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-        <!-- Icon Font Stylesheet -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-<!-- Carousel Start -->
-<div dir="ltr" class="header-carousel owl-carousel">
-    <div class="header-carousel-item">
-        <img src="~/img/carousel-1.jpg" class="img-fluid w-100" alt="Various Services">
+<!-- Customized Bootstrap Stylesheet -->
+
+<div class="header-carousel owl-carousel">
+    <div dir="ltr"class="header-carousel-item">
+        <img src="~/img/carousel-1.jpg" class="img-fluid w-100" alt="Image">
         <div class="carousel-caption">
             <div class="container">
-                <div class="row g-5">
+                <div class="row gy-0 gx-5">
+                    <div class="col-lg-0 col-xl-5"></div>
                     <div class="col-12 animated fadeInUp">
                         <div class="text-center">
-                            <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome to Professional Services</h4>
-                            <h1 class="display-4 text-uppercase text-white mb-4">All Professional Services Under One Roof</h1>
-                            <p class="mb-5 fs-5">We offer a variety of professional services through our specialized team. We're here to meet your needs with professionalism.</p>
-                            <!-- زر فتح الفيديو -->
-                            <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2"
-                               href="#"
-                               data-bs-toggle="modal"
-                               data-bs-target="#videoModal">
-                                <i class="fas fa-play-circle me-2"></i>مشاهدة الفيديو
-                            </a>
+                            <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome to MyService</h4>
+                            <h1 class="display-4 text-uppercase text-white mb-4">Expert Engineering Solutions for Home Repairs</h1>
+                            <p class="mb-5 fs-5">
+                                Our dedicated team delivers innovative and reliable repair solutions tailored for your home. From electrical upgrades and precision painting to carpentry and plumbing, we transform your living space with excellence and care.
+                            </p>
 
-                            <!-- نافذة الـ Modal -->
-                            <div class="modal fade" id="videoModal" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <!-- زر إغلاق -->
-                                            <button type="button"
-                                                    class="btn-close"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-
-                                            <!-- مشغل الفيديو -->
-                                            <div class="ratio ratio-16x9">
-                                                <iframe src="https://www.youtube.com/embed/NmNWowrgcvo?si=CQJ8NnOa-NaZJLzu"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="d-flex justify-content-center justify-content-md-center flex-shrink-0 mb-4">
+                                <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
+                                <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
                             </div>
                             <div class="d-flex align-items-center justify-content-center">
                                 <h2 class="text-white me-2">Follow Us:</h2>
@@ -62,8 +38,8 @@
             </div>
         </div>
     </div>
-    <div class="header-carousel-item">
-        <img src="~/img/carousel-2.jpg" class="img-fluid w-100" alt="Professional Services">
+    <div  class="header-carousel-item">
+        <img src="~/img/carousel-2.jpg" class="img-fluid w-100" alt="Image">
         <div class="carousel-caption">
             <div class="container">
                 <div class="row g-5">
@@ -71,7 +47,7 @@
                         <div class="text-center">
                             <h4 class="text-primary text-uppercase fw-bold mb-4">Welcome to Professional Services</h4>
                             <h1 class="display-4 text-uppercase text-white mb-4">Comprehensive Solutions for All Your Needs</h1>
-                            <p class="mb-5 fs-5">We provide effective solutions for all your professional requirements, ensuring quality and expertise in every project.</p>
+                            <p class="mb-5 fs-5">We provide effective solutions for all your professional requirements with guaranteed quality and expertise in every project.</p>
                             <div class="d-flex justify-content-center flex-shrink-0 mb-4">
                                 <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
                                 <a class="btn btn-primary rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
@@ -92,24 +68,24 @@
         </div>
     </div>
 </div>
-<!-- Carousel End -->
-
-<!-- About Start -->
-<div class="container-fluid about py-5" id="about">
+<!-- Abvout Start -->
+<div class="container-fluid about py-5">
     <div class="container py-5">
         <div class="row g-5 align-items-center">
             <div class="col-xl-7 wow fadeInLeft" data-wow-delay="0.2s">
                 <div>
-                    <h4 class="text-primary">About Our Services</h4>
-                    <h1 class="display-5 mb-4">Explore Our Diverse Range of Services</h1>
-                    <p class="mb-4">We offer a comprehensive suite of professional services to ensure your success. We're here to help you achieve your goals efficiently and professionally.</p>
+                    <h4 class="text-primary">About Us</h4>
+                    <h1 class="display-5 mb-4">Transforming Homes with Expert Engineering Solutions</h1>
+                    <p class="mb-4">
+                        At MyService, we provide comprehensive engineering services to fix any home problem. From electrical repairs to professional painting and beyond, our team is committed to making your living space safe, efficient, and beautifully maintained.
+                    </p>
                     <div class="row g-4">
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="d-flex">
                                 <div><i class="fas fa-lightbulb fa-3x text-primary"></i></div>
                                 <div class="ms-4">
-                                    <h4>Business Consultations</h4>
-                                    <p>We help you make strategic decisions to grow your business.</p>
+                                    <h4>Innovative Solutions</h4>
+                                    <p>We employ cutting-edge techniques and equipment to diagnose and fix your home challenges efficiently.</p>
                                 </div>
                             </div>
                         </div>
@@ -117,19 +93,19 @@
                             <div class="d-flex">
                                 <div><i class="bi bi-bookmark-heart-fill fa-3x text-primary"></i></div>
                                 <div class="ms-4">
-                                    <h4>Years of Experience</h4>
-                                    <p>Our team possesses extensive expertise in delivering optimal solutions.</p>
+                                    <h4>Trusted Expertise</h4>
+                                    <p>With years of experience in engineering and repair, our experts deliver reliable and lasting solutions.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#" class="btn btn-primary rounded-pill py-3 px-5 flex-shrink-0">Discover More</a>
+                            <a href="#" class="btn btn-primary rounded-pill py-3 px-5 flex-shrink-0">Discover Now</a>
                         </div>
                         <div class="col-sm-6">
                             <div class="d-flex">
                                 <i class="fas fa-phone-alt fa-2x text-primary me-4"></i>
                                 <div>
-                                    <h4>Contact Us</h4>
+                                    <h4>Call Us</h4>
                                     <p class="mb-0 fs-5" style="letter-spacing: 1px;">+01234567890</p>
                                 </div>
                             </div>
@@ -140,6 +116,7 @@
             <div class="col-xl-5 wow fadeInRight" data-wow-delay="0.2s">
                 <div class="bg-primary rounded position-relative overflow-hidden">
                     <img src="~/img/about-2.png" class="img-fluid rounded w-100" alt="">
+
                     <div class="" style="position: absolute; top: -15px; right: -15px;">
                         <img src="~/img/about-3.png" class="img-fluid" style="width: 150px; height: 150px; opacity: 0.7;" alt="">
                     </div>
@@ -155,83 +132,189 @@
     </div>
 </div>
 <!-- About End -->
-
-<!-- Features Start -->
-<div class="container-fluid feature pb-5" id="service">
+<!-- Services Start -->
+<div class="container-fluid service pb-5">
     <div class="container pb-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
             <h4 class="text-primary">Our Services</h4>
-            <h1 class="display-5 mb-4">Comprehensive Technical Services for Homes & Businesses</h1>
-            <p class="mb-0">We provide a variety of professional technicians including electricians, plumbers, and carpenters to meet all your needs with high efficiency and quality.</p>
+            <h1 class="display-5 mb-4">Expert Engineering Solutions for Your Home</h1>
+            <p class="mb-0">
+                At MyService, we deliver innovative, reliable engineering services to solve every home repair challenge. From electrical upgrades to precision painting and carpentry, our team is dedicated to making your home safe, efficient, and beautifully maintained.
+            </p>
         </div>
+
         <div class="row g-4">
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-plug fa-4x text-primary"></i>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/elec.jpg" class="img-fluid rounded-top w-100" alt="Image">
                     </div>
-                    <h4>Professional Electrician</h4>
-                    <p class="mb-4">We offer various electrical services from installation to maintenance to ensure your home's safety.</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4"> Electrical Service</a>
+                        <p class="mb-4">
+                            Our skilled electricians quickly diagnose and fix electrical issues. They ensure safe and efficient repairs and installations for your home.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-water fa-4x text-primary"></i>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/plumbing.jpg" class="img-fluid rounded-top w-100" alt="Image">
                     </div>
-                    <h4>Professional Plumber</h4>
-                    <p class="mb-4">Complete plumbing services including repairs and installations to prevent leaks in your home.</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">Plumbing Services</a>
+                        <p class="mb-4">
+                            Our professional plumbers repair leaks and clear drains promptly. They deliver reliable installation and maintenance so your water systems run smoothly.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-tools fa-4x text-primary"></i>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Painting.jpg" class="img-fluid rounded-top w-100" alt="Image">
                     </div>
-                    <h4>Professional Carpenter</h4>
-                    <p class="mb-4">Custom woodworking services including furniture installation and unique interior designs.</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">Painting Services</a>
+                        <p class="mb-4">
+                            Our painters refresh interiors and exteriors with quality finishes. They carefully prepare surfaces to ensure a durable, vibr
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                <div class="feature-item p-4">
-                    <div class="feature-icon p-4 mb-4">
-                        <i class="fas fa-paint-brush fa-4x text-primary"></i>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Carpentry.jpg" class="img-fluid rounded-top w-100" alt="Image">
                     </div>
-                    <h4>Painting Services</h4>
-                    <p class="mb-4">Interior and exterior painting services to give your home a beautiful finish.</p>
-                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">Carpentry Services</a>
+                        <p class="mb-4">
+                            Our carpenters craft and repair custom wooden fixtures that enhance your space. They combine precision with quality workmanship in every project.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/HVAC.jpg" class="img-fluid rounded-top w-100" alt="Image">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">HVAC Services</a>
+                        <p class="mb-4">
+                            Our HVAC technicians install, maintain, and repair heating and cooling systems efficiently. They help keep your home comfortable in every season.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item">
+                    <div class="service-img">
+                        <img src="~/img/Cleaning.jpg" class="img-fluid rounded-top w-100" alt="Image">
+                    </div>
+                    <div class="rounded-bottom p-4">
+                        <a href="#" class="h4 d-inline-block mb-4">Cleaning Services</a>
+                        <p class="mb-4">
+                            Our cleaning professionals provide comprehensive residential cleaning services. They tailor each cleaning routine to your specific needs for a spotless home.
+                        </p>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Features End -->
-
-<!-- Offer Start -->
-<div class="container-fluid offer-section pb-5" id="Features">
+<!-- Services End -->
+<!-- Features Start -->
+<div class="container-fluid service pb-5">
     <div class="container pb-5">
         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-            <h4 class="text-primary">Our Offers</h4>
-            <h1 class="display-5 mb-4">Benefits We Provide</h1>
-            <p class="mb-0">We offer various technical services from professional electricians, plumbers, and carpenters to meet your needs with high efficiency.</p>
+            <h4 class="text-primary">MyService</h4>
+            <h1 class="display-5 mb-4">Reliable Solutions for Your Essential Home Services.</h1>
+            <p class="mb-0">
+                Our certified professionals deliver 24/7 emergency support and maintenance for all your critical home systems. Fast response, quality workmanship, and transparent pricing guaranteed.
+
+                .
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-lightbulb fa-4x text-primary"></i>
+                    </div>
+                    <h4>Creative Solutions</h4>
+                    <p class="mb-4">We transform your ideas into effective strategies. Our approach combines creativity and proven methods to overcome obstacles....</p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-users-cog fa-4x text-primary"></i>
+                    </div>
+                    <h4>Personal Support</h4>
+                    <p class="mb-4">We offer personalized support for everyday challenges. Our team provides clear guidance with practical solutions..</p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-clock fa-4x text-primary"></i>
+                    </div>
+                    <h4>24/7 Availability</h4>
+                    <p class="mb-4">
+                        Our team is always on call, providing support and expert advice around the clock. No matter the hour, you can count on us to be there when you need us.
+                        ...
+                    </p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
+                <div class="service-item p-4">
+                    <div class="service-icon p-4 mb-4">
+                        <i class="fas fa-heartbeat fa-4x text-primary"></i>
+                    </div>
+                    <h4>Health & Wellness</h4>
+                    <p class="mb-4">Enjoy round-the-clock care with our Health & Wellness service. We deliver expert advice and immediate support whenever you need it....</p>
+                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Features End -->
+<!-- Offer Start -->
+<div class="container-fluid offer-section pb-5">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Our Offer</h4>
+            <h1 class="display-5 mb-4">Benefits We offer</h1>
+            <p class="mb-0">
+                Experience reliable, professional home repair services engineered to resolve everyday issues efficiently. Our expert team delivers tailored solutions for electrical, plumbing, painting, and carpentry challenges.
+            </p>
         </div>
         <div class="row g-5 align-items-center">
             <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.2s">
                 <div class="nav nav-pills bg-light rounded p-5">
                     <a class="accordion-link p-4 active mb-4" data-bs-toggle="pill" href="#collapseOne">
-                        <h5 class="mb-0">Reliable Electrical Services</h5>
+                        <h5 class="mb-0">Expert Electrical Repairs & Upgrades</h5>
                     </a>
                     <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseTwo">
-                        <h5 class="mb-0">Comprehensive Plumbing Solutions</h5>
+                        <h5 class="mb-0">Reliable Plumbing & Water System Solutions</h5>
                     </a>
                     <a class="accordion-link p-4 mb-4" data-bs-toggle="pill" href="#collapseThree">
-                        <h5 class="mb-0">Custom Carpentry Services</h5>
+                        <h5 class="mb-0">Precision Painting, Finishing & Restoration</h5>
                     </a>
                     <a class="accordion-link p-4 mb-0" data-bs-toggle="pill" href="#collapseFour">
-                        <h5 class="mb-0">Interior & Exterior Painting</h5>
+                        <h5 class="mb-0">Custom Carpentry & Comprehensive Renovation</h5>
                     </a>
                 </div>
             </div>
@@ -240,11 +323,13 @@
                     <div id="collapseOne" class="tab-pane fade show p-0 active">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-1.jpg" class="img-fluid w-100 rounded" alt="Electrical Services">
+                                <img src="~/img/elec.jpg" class="img-fluid w-100 rounded" alt="">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">Reliable Electrical Services</h1>
-                                <p class="mb-4">We provide the best electrical solutions for all your needs, from installation to maintenance.</p>
+                                <h1 class="display-5 mb-4">Expert Electrical Repairs & Upgrades..</h1>
+                                <p class="mb-4">
+                                    Our engineering team provides safe, efficient electrical repairs and upgrades tailored to your home's needs. We ensure your wiring, lighting, and circuitry are optimized for both performance and safety.
+                                </p>
                                 <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                             </div>
                         </div>
@@ -252,11 +337,13 @@
                     <div id="collapseTwo" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-2.jpg" class="img-fluid w-100 rounded" alt="Plumbing Services">
+                                <img src="~/img/plumbing.jpg" class="img-fluid w-100 rounded" alt="">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">Comprehensive Plumbing Solutions</h1>
-                                <p class="mb-4">Our team of professional plumbers provides quick and effective solutions for all plumbing issues.</p>
+                                <h1 class="display-5 mb-4">Reliable Plumbing & Water System Solutions</h1>
+                                <p class="mb-4">
+                                    Our certified plumbers address leaks, clogs, and water system repairs with precision. We deliver prompt, effective solutions to ensure your home's plumbing runs smoothly.
+                                </p>
                                 <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                             </div>
                         </div>
@@ -264,11 +351,13 @@
                     <div id="collapseThree" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-3.jpg" class="img-fluid w-100 rounded" alt="Carpentry Services">
+                                <img src="~/img/Painting.jpg" class="img-fluid w-100 rounded" alt="">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">Custom Carpentry Services</h1>
-                                <p class="mb-4">We offer custom carpentry services from furniture installation to unique interior designs.</p>
+                                <h1 class="display-5 mb-4">Precision Painting, Finishing & Restoration.</h1>
+                                <p class="mb-4">
+                                    Our painting services offer top-quality finishes that enhance and protect your home's surfaces. We focus on thorough preparation and expert application for a vibrant, long-lasting result.
+                                </p>
                                 <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                             </div>
                         </div>
@@ -276,11 +365,13 @@
                     <div id="collapseFour" class="tab-pane fade show p-0">
                         <div class="row g-4">
                             <div class="col-md-7">
-                                <img src="~/img/offer-4.jpg" class="img-fluid w-100 rounded" alt="Painting Services">
+                                <img src="~/img/Carpentry.jpg" class="img-fluid w-100 rounded" alt="">
                             </div>
                             <div class="col-md-5">
-                                <h1 class="display-5 mb-4">Interior & Exterior Painting</h1>
-                                <p class="mb-4">Renovate your home with our professional painting services for a distinctive aesthetic finish.</p>
+                                <h1 class="display-5 mb-4">Custom Carpentry  Renovation..</h1>
+                                <p class="mb-4">
+                                    Our carpentry and renovation solutions offer custom designs and expert craftsmanship to transform your home. We deliver creative, durable construction tailored to your unique needs.
+                                </p>
                                 <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                             </div>
                         </div>
@@ -290,46 +381,272 @@
         </div>
     </div>
 </div>
+<!-- Offer End -->
+<!-- Blog Start -->
+<div class="container-fluid blog pb-5">
+    <div class="container pb-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">Our Home Repair Insights</h4>
+            <h1 class="display-5 mb-4">Expert Articles on Engineering Solutions</h1>
+            <p class="mb-0">
+                Discover expert advice, innovative fixes, and practical tips from our experienced engineering team to resolve common home problems.
+            </p>
+        </div>
+        <div class="owl-carousel blog-carousel wow fadeInUp" data-wow-delay="0.2s">
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Electrical Services.jpg" class="img-fluid w-100 rounded" alt="">
+                    <div class="blog-title">
+                        <a href="#" class="btn">Electrical Repairs</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">How to Upgrade Your Home's Electrical System</a>
+                <p class="mb-4">
+                    Explore our comprehensive guide on home repair solutions. Discover step-by-step advice, practical tips, and reliable engineering insights to keep your home safe and comfortable.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Electrical Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="">
+                    <div class="ms-3">
+                        <p class="mb-0">April 9, 2025</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Plumbing Services.jpg" class="img-fluid w-100 rounded" alt="">
+                    <div class="blog-title">
+                        <a href="#" class="btn">Plumbing Solutions</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">Preventing Common Plumbing Issues at Home</a>
+                <p class="mb-4">
+                    Explore our comprehensive guide on home repair solutions. Discover step-by-step advice, practical tips, and reliable engineering insights to keep your home safe and comfortable.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Plumbing Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="">
+                    <div class="ms-3">
+                        <p class="mb-0">April 6, 2025</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Painting Services.jpg" class="img-fluid w-100 rounded" alt="">
+                    <div class="blog-title">
+                        <a href="#" class="btn">Painting & Renovation</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">Transform Your Home with Expert Painting Tips</a>
+                <p class="mb-4">
+                    Explore our comprehensive guide on home repair solutions. Discover step-by-step advice, practical tips, and reliable engineering insights to keep your home safe and comfortable.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Painting Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="">
+                    <div class="ms-3">
+                        <p class="mb-0">April 3, 2025</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="blog-item p-4">
+                <div class="blog-img mb-4">
+                    <img src="~/img/Carpentry Services.jpg" class="img-fluid w-100 rounded" alt="">
+                    <div class="blog-title">
+                        <a href="#" class="btn">Carpentry & Remodeling</a>
+                    </div>
+                </div>
+                <a href="#" class="h4 d-inline-block mb-3">Custom Woodwork and Home Renovation Ideas</a>
+                <p class="mb-4">
+                    Explore our comprehensive guide on home repair solutions. Discover step-by-step advice, practical tips, and reliable engineering insights to keep your home safe and comfortable.
+                </p>
+                <div class="d-flex align-items-center">
+                    <img src="~/img/Carpentry Services.jpg" class="img-fluid rounded-circle" style="width: 60px; height: 60px;" alt="">
+                    <div class="ms-3">
+                        <p class="mb-0">April 5, 2025</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog End -->
+<!-- FAQs Start -->
+<div class="container-fluid faq-section pb-5">
+    <div class="container pb-5 overflow-hidden">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+            <h4 class="text-primary">FAQs</h4>
+            <h1 class="display-5 mb-4">Frequently Asked Questions</h1>
+            <p class="mb-0">
+                Our service delivers reliable home repair solutions, including professional painting and electrical fixes. Explore our FAQs to learn how to schedule appointments, understand our process, and get expert help in transforming your living space.
+            </p>
+        </div>
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
+                <div class="accordion accordion-flush bg-light rounded p-5" id="accordionFlushSection">
+                    <div class="accordion-item rounded-top">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed rounded-top" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                How do your engineering services work?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                Our engineering service evaluates your home repair needs with a thorough assessment and customized solutions. We provide expert advice to fix issues ranging from painting to electrical repairs.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                What is the turnaround time for your repair services?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                Turnaround times vary by project complexity. Our team provides a clear timeline during the initial consultation and strives to complete repairs promptly.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                Are your repair services safe and reliable?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                Yes, our team strictly adheres to high safety standards and quality controls. We ensure that every repair—whether electrical or painting—is completed to the highest level of reliability and craftsmanship.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                How do you handle unexpected repair challenges?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                Our engineers are equipped to handle any unforeseen issues that arise during repairs. We promptly assess challenges and adjust our strategies to deliver effective, lasting solutions.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                What types of home repairs do you offer?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                We provide a broad spectrum of home repair services including electrical fixes, professional painting, plumbing, carpentry, and more. Each project is tailored to address your home’s unique requirements.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item rounded-bottom">
+                        <h2 class="accordion-header" id="flush-headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                How can I schedule a repair appointment?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-headingSix" data-bs-parent="#accordionFlushSection">
+                            <div class="accordion-body">
+                                Booking an appointment is simple. You can contact us through our website or call our service line, and our team will arrange a convenient time for an initial consultation and repair assessment.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                <div class="bg-primary rounded">
+                    <img src="~/img/about-2.png" class="img-fluid w-100" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FAQs End -->
+<!-- Team Start -->
+<!-- Team End -->
+<!-- Testimonial Start -->
+<!-- Testimonial End -->
+<!-- Footer Start -->
 <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
     <div class="container py-5 border-start-0 border-end-0" style="border: 1px solid; border-color: rgba(255, 255, 255, 0.08);">
         <div class="row g-5">
+            <!-- Brand and download links -->
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item">
                     <a href="index.html" class="p-0">
-                        <h4 class="text-white"><i class="fas fa-tools me-3"></i>Professional Technicians</h4>
+                        <h4 class="text-white"><i class="fas fa-tools me-3"></i>MyService</h4>
                     </a>
-                    <p class="mb-4">We provide various technical services including electricians, plumbers, and carpenters. Contact us for optimal solutions.</p>
+                    <p class="mb-4">
+                        Providing innovative engineering solutions to fix home repairs and enhance your living space. Trust our experts for quality service and lasting results.
+                    </p>
                     <div class="d-flex">
                         <a href="#" class="bg-primary d-flex rounded align-items-center py-2 px-3 me-2">
                             <i class="fas fa-apple-alt text-white"></i>
                             <div class="ms-3">
-                                <small class="text-white">Download on</small>
+                                <small class="text-white">Download on the</small>
                                 <h6 class="text-white">App Store</h6>
                             </div>
                         </a>
-                       
+                        <a href="#" class="bg-dark d-flex rounded align-items-center py-2 px-3 ms-2">
+                            <i class="fas fa-play text-primary"></i>
+                            <div class="ms-3">
+                                <small class="text-white">Get it on</small>
+                                <h6 class="text-white">Google Play</h6>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-6 col-lg-6 col-xl-3" id="contact">
+            <!-- Quick Links -->
+            <div class="col-md-6 col-lg-6 col-xl-2">
                 <div class="footer-item">
-                    <h4 class="text-white mb-4">Contact Information</h4>
+                    <h4 class="text-white mb-4">Quick Links</h4>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Home</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> About Us</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Services</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Projects</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Blog</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                </div>
+            </div>
+            <!-- Support -->
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <div class="footer-item">
+                    <h4 class="text-white mb-4">Support</h4>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Terms &amp; Conditions</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> FAQs</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Help</a>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i> Customer Service</a>
+                </div>
+            </div>
+            <!-- Contact Info -->
+            <div class="col-md-6 col-lg-6 col-xl-3">
+                <div class="footer-item">
+                    <h4 class="text-white mb-4">Contact Info</h4>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-map-marker-alt text-primary me-3"></i>
-                        <p class="text-white mb-0">123 23, Asir, Saudi Arabia</p>
+                        <p class="text-white mb-0">456 maka Ave, Asir, Ksa</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="fas fa-envelope text-primary me-3"></i>
-                        <p class="text-white mb-0">info@Service.com</p>
+                        <p class="text-white mb-0">support@myservice.com</p>
                     </div>
                     <div class="d-flex align-items-center">
                         <i class="fa fa-phone-alt text-primary me-3"></i>
-                        <p class="text-white mb-0">(+966) 5606 7890</p>
+                        <p class="text-white mb-0">(+996) 5556 7890</p>
                     </div>
-                </div>
-            </div>
-
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fab fa-firefox-browser text-primary me-3"></i>
+                        <p class="text-white mb-0">www.myservice.com</p>
+                    </div>
                     <div class="d-flex">
                         <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f text-white"></i></a>
                         <a class="btn btn-primary btn-sm-square rounded-circle me-3" href="#"><i class="fab fa-twitter text-white"></i></a>
@@ -339,4 +656,23 @@
                 </div>
             </div>
         </div>
-  
+    </div>
+</div>
+<!-- Footer End -->
+<!-- Copyright Start -->
+<div class="container-fluid copyright py-4">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-md-0">
+                <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>خدماتي</a>، جميع الحقوق محفوظة.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end text-body">
+                تصميم بواسطة <a class="border-bottom text-white" href="https://htmlcodex.com">CMS</a> وتوزيع بواسطة <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Copyright End -->
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+

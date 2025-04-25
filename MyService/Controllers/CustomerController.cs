@@ -339,41 +339,55 @@ namespace MyService.Controllers
             return View();
         }
 
+       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
+
+        
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Eamil);
-            //var authProperties = new AuthenticationProperties
-            //{
-            //    IsPersistent = true,
-            //    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30) // مدة الصلاحية 30 دقيقة
-            //};
-
-            //await _signInManager.SignInAsync(user, authProperties);
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (!(await _userManager.IsInRoleAsync(user, Helper.Roles.Basic.ToString())))
-                {
-                    // إعادة التوجيه إلى الصفحة الرئيسية في الـ Area الخاص بالإدارة
-                    ViewBag.ErrorLogin = false;
-                }
-                var result = await _signInManager.PasswordSignInAsync(model.Eamil, model.Password, model.RememberMy, false);
-                if (result.Succeeded)
-                {
-                    user.ActiveUser = true;
-                    await _userManager.UpdateAsync(user);
-
-                    // إعادة التوجيه إلى الصفحة الرئيسية العادية
-                    return RedirectToAction("Index", "Home");
-                    }
-                
+                // Model binding errors (e.g. empty fields) will show automatically
+                return View(model);
             }
-            return View(model);
-        }
 
+            // 1) Does the email exist?
+            var user = await _userManager.FindByNameAsync(model.Eamil);
+            if (user == null)
+            {
+                // Generic message so as not to reveal which field is invalid
+                ModelState.AddModelError(string.Empty, "بيانات الدخول غير صحيحة.");
+                return View(model);
+            }
+
+            // 2) Are they an Admin/SuperAdmin? (block if needed)
+            if (await _userManager.IsInRoleAsync(user, "Admin") ||
+                await _userManager.IsInRoleAsync(user, "SuperAdmin"))
+            {
+                ModelState.AddModelError(string.Empty, "ليس لديك صلاحية الوصول من هنا.");
+                return View(model);
+            }
+
+            // 3) Try password sign-in
+            var result = await _signInManager.PasswordSignInAsync(
+                model.Eamil, model.Password, model.RememberMy, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "بيانات الدخول غير صحيحة.");
+                return View(model);
+            }
+
+            // 4) Mark user as active
+            user.ActiveUser = true;
+            await _userManager.UpdateAsync(user);
+
+            // 5) Redirect on success
+            return RedirectToAction("Index", "Home");
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HttpPost]

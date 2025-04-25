@@ -135,4 +135,13 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Add Request" xml:space="preserve">
+    <value>Add Request</value>
+  </data>
+  <data name="Select Map" xml:space="preserve">
+    <value>Select Location</value>
+  </data>
+  <data name="Current Location" xml:space="preserve">
+    <value>Current Location</value>
+  </data>
 </root>

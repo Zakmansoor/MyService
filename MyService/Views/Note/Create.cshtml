@@ -19,12 +19,22 @@
         Layout = "~/Views/Shared/_Layoutarabicy.cshtml";
 
     }
-}
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
 
+    }
+}
+<body>
+
+    <div class="container-fluid copyright py-4">
 <div class="container mt-5">
-    <div class="card shadow-sm">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm mt-4">
+                
         <div class="card-header bg-primary text-white">
-            <h2 class="card-title mb-0">Add New Note</h2>
+            <h2 class="card-title mb-0">@localizer["Add Note"]</h2>
         </div>
         <div class="card-body">
             @if (TempData["Error"] != null)
@@ -48,11 +58,16 @@
                     <span asp-validation-for="description" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-success">@localizer["Send"] </button>
-            </form>
+                                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary ml-2">@localizer["Cancel"]</a>
+                            </form>
         </div>
     </div>
 </div>
-
+</div>
+</div>
+</div>
+</div>
+</body>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

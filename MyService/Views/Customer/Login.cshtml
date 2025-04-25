@@ -2,102 +2,85 @@
 @{
     Layout = null;
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Customer | Log in</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="~/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>تسجيل الدخول</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap, Font‑Awesome, AdminLTE, etc. -->
+    <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css" />
+    <style>
+        body {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Log</b>In</a>
+            <a><b>تسجيل</b>الدخول</a>
         </div>
-        <!-- /.login-logo -->
+
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">أدخل بياناتك للدخول</p>
+
+                @* Show any non‑field errors (e.g. forbidden role) *@
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
 
                 <form asp-action="Login" asp-controller="Customer" method="post">
-                    @if (ViewBag.ErrorLogin == false)
-                    {
-                        <span class="alert alert-danger w-100">
-                            @ResourceWeb.lbMsgErrorLogin
-                        </span>
-
-                        <br /> <br />
-                    }
+                    @Html.AntiForgeryToken()
 
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" asp-for="Eamil" placeholder="Email">
+                        <input asp-for="Eamil" class="form-control" placeholder="البريد الإلكتروني" />
                         <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
-                            </div>
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                         </div>
                     </div>
-                    <span class="text-danger" asp-validation-for="Eamil"></span>
+                    <span asp-validation-for="Eamil" class="text-danger"></span>
 
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" asp-for="Password" placeholder="Password">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="كلمة المرور" />
                         <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
                         </div>
                     </div>
-                    <span class="text-danger" asp-validation-for="Password"></span>
+                    <span asp-validation-for="Password" class="text-danger"></span>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" asp-for="RememberMy" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
+                                <input asp-for="RememberMy" type="checkbox" id="remember" />
+                                <label for="remember">  تذكرني</label>&nbsp&nbsp&nbsp
+
                             </div>
+
                         </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                        </div>
-                        <!-- /.col -->
                     </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">دخول</button>
                 </form>
 
-                
-                <!-- /.social-auth-links -->
-
-                
-                <p class="mb-0">
-                    <a asp-controller="Customer" asp-action="Registers" class="text-center">Register a new membership</a>
+                <p class="mb-1 mt-3">
+                    <a asp-action="Registers" asp-controller="Customer">إنشاء حساب جديد</a>
+                </p><p class="mb-1 mt-3">
+                    <a asp-action="Login" asp-controller="Accounts" asp-area="Admin">الدخول كادمن او كموظف</a>
                 </p>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
-    <!-- jQuery -->
-    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Scripts for validation -->
+    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
 </body>
 </html>

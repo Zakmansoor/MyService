@@ -135,4 +135,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Add Note" xml:space="preserve">
+    <value>Add Note</value>
+  </data>
 </root>
